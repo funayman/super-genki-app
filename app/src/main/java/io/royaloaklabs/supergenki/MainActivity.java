@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.royaloaklabs.supergenki.adapter.RecyclerViewAdapter;
+import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.JapaneseCard;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,5 +51,6 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new RecyclerViewAdapter(japaneseCards);
         rv.setAdapter(mAdapter);
 
+        DictionaryAdapter da = new DictionaryAdapter(getApplicationContext());
     }
 }
