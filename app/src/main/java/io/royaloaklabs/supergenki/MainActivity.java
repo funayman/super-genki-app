@@ -32,9 +32,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // mTextMessage = (TextView) findViewById(R.id.message);
-       // BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-       // navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        DictionaryAdapter da = new DictionaryAdapter(getApplicationContext());
+
+        // mTextMessage = (TextView) findViewById(R.id.message);
+        // BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        // navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         rv = (RecyclerView)findViewById(R.id.rv);
         rv.setHasFixedSize(true);
@@ -49,8 +51,10 @@ public class MainActivity extends AppCompatActivity {
         japaneseCards.add(new JapaneseCard("こちは", "Translation: Eric Rocks", "Pronunciation: E-Rock"));
 
         mAdapter = new RecyclerViewAdapter(japaneseCards);
+
+        // mAdapter = new RecyclerViewAdapter(da.getRandomData());
+
         rv.setAdapter(mAdapter);
 
-        DictionaryAdapter da = new DictionaryAdapter(getApplicationContext());
     }
 }
