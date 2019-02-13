@@ -1,13 +1,19 @@
 package io.royaloaklabs.supergenki;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,9 +29,40 @@ public class MainActivity extends AppCompatActivity {
 
   private DictionaryAdapter dictionaryAdapter;
 
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.nav_about:
+        // User chose the "About" item, show the app settings UI...
+        showAboutDialog();
+        return true;
+
+      default:
+        // If we got here, the user's action was not recognized.
+        // Invoke the superclass to handle it.
+        return super.onOptionsItemSelected(item);
+    }
+  }
+
+  private void showAboutDialog() {
+    AlertDialog.Builder adb = new AlertDialog.Builder(this);
+    View dialogView = getLayoutInflater().inflate(R.layout.about_view, null);
+
+    TextView tv = (TextView) dialogView.findViewById(R.id.about_dialog_textview);
+    String sourceString = getString(R.string.about_dialog_text);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+      tv.setText(Html.fromHtml(sourceString, Html.FROM_HTML_MODE_LEGACY));
+    } else {
+      tv.setText(Html.fromHtml(sourceString));
+    }
+
+    adb.setView(dialogView).setPositiveButton("Close", null);
+    adb.create().show();
+  }
+
   public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.navigation, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.navigation, menu);
 
     final MenuItem searchMenuItem = menu.findItem(R.id.search);
     final SearchView searchView   = (SearchView) searchMenuItem.getActionView();
