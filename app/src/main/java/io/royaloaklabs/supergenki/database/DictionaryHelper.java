@@ -27,7 +27,6 @@ public class DictionaryHelper extends SQLiteOpenHelper {
     if(this.hasNoDatabase()) {
       try {
         this.copyInternalDatabase();
-        this.connect();
       } catch (IOException e) {
         // DB file does not exist in the assets directory
         // create an in-memory database to work with
@@ -40,6 +39,9 @@ public class DictionaryHelper extends SQLiteOpenHelper {
       }
     }
 
+    mDatabase = (mDatabase == null)
+        ? SQLiteDatabase.openDatabase(DATABASE_PATH, null, SQLiteDatabase.OPEN_READONLY)
+        : mDatabase;
   }
 
   @Override
@@ -57,11 +59,6 @@ public class DictionaryHelper extends SQLiteOpenHelper {
     return mDatabase;
   }
 
-  private boolean connect() throws SQLException{
-    mDatabase = SQLiteDatabase.openDatabase(DATABASE_PATH, null, SQLiteDatabase.OPEN_READONLY);
-    return mDatabase.isOpen();
-  }
-
   private boolean hasNoDatabase() {
     SQLiteDatabase db = null;
 
@@ -69,8 +66,6 @@ public class DictionaryHelper extends SQLiteOpenHelper {
       db = SQLiteDatabase.openDatabase(DATABASE_PATH, null, SQLiteDatabase.OPEN_READONLY);
       db.close();
     } catch(SQLException e) {
-      // do nothing, db doesn't exists
-    } catch(Exception e) {
       // do nothing, db doesn't exists
     }
 
