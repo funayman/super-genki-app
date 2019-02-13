@@ -25,4 +25,9 @@ public class JapaneseCard {
         this.photoId = photoId;
     }
 
+
+    @Override
+    public String toString() {
+        return String.format("JapaneseCard = [japaneseText: %s, englishMeaning: %s, photoId: %s]", this.japaneseText, this.englishMeaning, this.photoId);
+    }
 }

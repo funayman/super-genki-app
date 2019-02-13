@@ -50,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
         japaneseCards.add(new JapaneseCard("こんにちは", "Translation: Hello", "Pronunciation: Kon'nichiwa"));
         japaneseCards.add(new JapaneseCard("こちは", "Translation: Eric Rocks", "Pronunciation: E-Rock"));
 
-        mAdapter = new RecyclerViewAdapter(japaneseCards);
+        // mAdapter = new RecyclerViewAdapter(japaneseCards);
 
-        // mAdapter = new RecyclerViewAdapter(da.getRandomData());
+        mAdapter = new RecyclerViewAdapter(da.getRandomData());
 
         rv.setAdapter(mAdapter);
 
