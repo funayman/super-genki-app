@@ -66,17 +66,10 @@ public class MainActivity extends AppCompatActivity {
     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
       @Override
       public boolean onQueryTextSubmit(String q) {
-        if(!searchView.isIconified()) {
-          searchView.setIconified(true);
-        }
-        searchMenuItem.collapseActionView();
-
         mAdapter = new RecyclerViewAdapter(dictionaryAdapter.Search(q));
         rv.setAdapter(mAdapter);
-
         return false;
       }
-
 
       @Override
       public boolean onQueryTextChange(String q) {
@@ -84,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         rv.setAdapter(mAdapter);
         return false;
       }
-
     });
 
     // repopulate the ListView with random entries when the user closes the search bar
