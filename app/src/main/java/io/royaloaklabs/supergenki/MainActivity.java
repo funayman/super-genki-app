@@ -3,7 +3,10 @@ package io.royaloaklabs.supergenki;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,6 +27,26 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.navigation, menu);
+
+        final MenuItem searchMenuItem = menu.findItem( R.id.search);
+        final SearchView searchView   = (SearchView) searchMenuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Search For="+query, Toast.LENGTH_SHORT);
+                toast.show();
+                if( ! searchView.isIconified()) {
+                    searchView.setIconified(true);
+                }
+                searchMenuItem.collapseActionView();
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+                // UserFeedback.show( "SearchOnQueryTextChanged: " + s);
+                return false;
+            }
+        });
         return true;
     }
 
@@ -51,9 +74,11 @@ public class MainActivity extends AppCompatActivity {
         japaneseCards.add(new JapaneseCard("こちは", "Translation: Eric Rocks", "Pronunciation: E-Rock"));
 
         // mAdapter = new RecyclerViewAdapter(japaneseCards);
-
-        mAdapter = new RecyclerViewAdapter(da.getRandomData());
-
+        if(da.getRandomData().size() != 0) {
+            mAdapter = new RecyclerViewAdapter(da.getRandomData());
+        } else {
+            mAdapter = new RecyclerViewAdapter(japaneseCards);
+        }
         rv.setAdapter(mAdapter);
 
     }

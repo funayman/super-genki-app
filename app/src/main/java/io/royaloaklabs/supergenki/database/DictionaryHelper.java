@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -69,13 +68,14 @@ public class DictionaryHelper extends SQLiteOpenHelper {
         try {
             db = SQLiteDatabase.openDatabase(DATABASE_PATH, null, SQLiteDatabase.OPEN_READONLY);
             db.close();
+            return false;
         } catch(SQLException e) {
             // do nothing, db doesn't exists
         } catch(Exception e) {
             // do nothing, db doesn't exists
         }
 
-        return db == null;
+        return true;
     }
 
     private void copyInternalDatabase() throws IOException {
