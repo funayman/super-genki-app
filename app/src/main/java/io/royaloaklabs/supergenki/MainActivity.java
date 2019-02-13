@@ -8,14 +8,11 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.royaloaklabs.supergenki.adapter.RecyclerViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
-import io.royaloaklabs.supergenki.domain.JapaneseCard;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -68,17 +65,8 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(mLayoutManager);
 
-        // specify an adapter (see also next example)
-        ArrayList<JapaneseCard> japaneseCards = new ArrayList<>();
-        japaneseCards.add(new JapaneseCard("こんにちは", "Translation: Hello", "Pronunciation: Kon'nichiwa"));
-        japaneseCards.add(new JapaneseCard("こちは", "Translation: Eric Rocks", "Pronunciation: E-Rock"));
 
-        // mAdapter = new RecyclerViewAdapter(japaneseCards);
-        if(da.getRandomData().size() != 0) {
-            mAdapter = new RecyclerViewAdapter(da.getRandomData());
-        } else {
-            mAdapter = new RecyclerViewAdapter(japaneseCards);
-        }
+        mAdapter = new RecyclerViewAdapter(da.getRandomData());
         rv.setAdapter(mAdapter);
 
     }

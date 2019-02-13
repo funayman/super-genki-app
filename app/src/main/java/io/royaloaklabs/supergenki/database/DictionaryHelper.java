@@ -19,19 +19,28 @@ public class DictionaryHelper extends SQLiteOpenHelper {
 
     private final Context mContext;
 
-    public DictionaryHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        mContext = context;
-        DATABASE_PATH = String.format("%s/%s", mContext.getFilesDir().getAbsolutePath(), DATABASE_NAME);
+  public DictionaryHelper(Context context) {
+    super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    mContext = context;
+    DATABASE_PATH = String.format("%s/%s", mContext.getFilesDir().getAbsolutePath(), DATABASE_NAME);
 
-        if(this.hasNoDatabase()) {
-            try {
-                this.copyInternalDatabase();
-            } catch (IOException e) {
-                // handle exception
-            }
-        }
+    if(this.hasNoDatabase()) {
+      try {
+        this.copyInternalDatabase();
+        this.connect();
+      } catch (IOException e) {
+        // DB file does not exist in the assets directory
+        // create an in-memory database to work with
+        mDatabase = SQLiteDatabase.create(null);
+        mDatabase.execSQL("CREATE VIRTUAL TABLE einihongo USING fts4(kanji,kana,gloss)");
+        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?)", new String[]{"此れ;是;是れ", "これ", "this (indicating an item near the speaker, the action of the speaker, or the current topic)"});
+        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?)", new String[]{"", "は", "topic marker particle||indicates contrast with another option (stated or unstated)||adds emphasis"});
+        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?)", new String[]{"", "テスト", "test"});
+        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?)", new String[]{"", "データ", "data||datum"});
+      }
     }
+
+  }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -44,38 +53,28 @@ public class DictionaryHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public SQLiteDatabase getReadableDatabase() {
-        if(mDatabase.isOpen()) {
-            return mDatabase;
-        }
-
-        try {
-            connect();
-        } catch(SQLException e) {
-            // handle exception
-        }
-
+    public SQLiteDatabase getReadableDatabase() throws SQLException {
         return mDatabase;
     }
 
-    public void connect() throws SQLException{
+    private boolean connect() throws SQLException{
         mDatabase = SQLiteDatabase.openDatabase(DATABASE_PATH, null, SQLiteDatabase.OPEN_READONLY);
+        return mDatabase.isOpen();
     }
 
-    public boolean hasNoDatabase() {
-        SQLiteDatabase db = null;
+    private boolean hasNoDatabase() {
+      SQLiteDatabase db = null;
 
-        try {
-            db = SQLiteDatabase.openDatabase(DATABASE_PATH, null, SQLiteDatabase.OPEN_READONLY);
-            db.close();
-            return false;
-        } catch(SQLException e) {
-            // do nothing, db doesn't exists
-        } catch(Exception e) {
-            // do nothing, db doesn't exists
-        }
+      try {
+        db = SQLiteDatabase.openDatabase(DATABASE_PATH, null, SQLiteDatabase.OPEN_READONLY);
+        db.close();
+      } catch(SQLException e) {
+        // do nothing, db doesn't exists
+      } catch(Exception e) {
+        // do nothing, db doesn't exists
+      }
 
-        return true;
+      return db == null;
     }
 
     private void copyInternalDatabase() throws IOException {

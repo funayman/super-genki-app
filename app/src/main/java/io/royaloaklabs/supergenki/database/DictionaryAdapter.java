@@ -14,14 +14,10 @@ public class DictionaryAdapter {
 
     public DictionaryAdapter(Context context) {
         this.mDictHelper = new DictionaryHelper(context);
-        if (!this.mDictHelper.hasNoDatabase() == true) {
-            mDictHelper.connect();
-        }
     }
 
 
     public List<JapaneseCard> getRandomData() {
-        if(this.mDictHelper.hasNoDatabase() != true) {
             SQLiteDatabase db = mDictHelper.getReadableDatabase();
 
             Cursor cursor = db.rawQuery("SELECT kanji, kana, gloss FROM einihongo ORDER BY RANDOM() LIMIT 20", null);
@@ -59,8 +55,5 @@ public class DictionaryAdapter {
 
 
             return mCards;
-        } else {
-            return new ArrayList<>();
         }
     }
-}
