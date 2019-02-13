@@ -9,9 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
       tv.setText(Html.fromHtml(sourceString));
     }
 
-    adb.setView(dialogView).setPositiveButton("Close", null);
+    adb.setView(dialogView).setPositiveButton(R.string.close, null);
     adb.create().show();
   }
 
   public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.navigation, menu);
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.navigation, menu);
 
     final MenuItem searchMenuItem = menu.findItem(R.id.search);
     final SearchView searchView   = (SearchView) searchMenuItem.getActionView();

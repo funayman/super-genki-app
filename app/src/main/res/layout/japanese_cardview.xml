@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:gravity="center"
+                android:gravity="left"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="36sp"
                 android:textStyle="bold"
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/japaneseText"
-                android:gravity="center"
+                android:gravity="left"
                 android:textSize="18sp" />
 
             <TextView
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/pronounceView"
-                android:gravity="center"
+                android:gravity="left"
                 android:textSize="18sp" />
         </RelativeLayout>
 

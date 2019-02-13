@@ -39,6 +39,7 @@ public class DictionaryHelper extends SQLiteOpenHelper {
       }
     }
 
+    // set the main database as either the asset or the in-memory version
     mDatabase = (mDatabase == null)
         ? SQLiteDatabase.openDatabase(DATABASE_PATH, null, SQLiteDatabase.OPEN_READONLY)
         : mDatabase;
