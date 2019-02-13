@@ -1,6 +1,33 @@
 <resources>
     <string name="app_name">SuperGenki!</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_about">About</string>
+    <string name="title_search">Search</string>
+
+    <string name="about_dialog_title">About Super Genki</string>
+    <string name="about_dialog_text"><![CDATA[
+        <h1>About</h1>
+        put some details in here
+
+        <h1>The Team</h1>
+        EZ-E and Dr. T bringing you some sweet, sweet, Japanese-English Dictionary.
+
+        <h1>Licence</h1>
+        Super Genki is developed and open sourced under the <b>INSERT LICENCE HERE</b> licence.
+
+        <h1>FOSS Materials</h1>
+
+        <h3>JMDict</h3>
+        The JMDict is an open source Japanese Dictionary with its own licence, which can be viewed here.
+
+        <h1>Some Hipsum to round out the scroll view</h1>
+        Lorem ipsum dolor amet laborum fingerstache try-hard, +1 dolor deserunt aliquip. Anim taxidermy franzen cupidatat ut bicycle rights. Jean shorts everyday carry tbh shaman tempor raclette anim keytar YOLO kale chips. Craft beer pitchfork shaman tote bag in. Cornhole mumblecore hot chicken fashion axe. Chicharrones snackwave meditation pour-over single-origin coffee actually post-ironic DIY man braid. Lorem laboris tumblr, disrupt subway tile et paleo nostrud YOLO.
+
+        Neutra direct trade aliquip hot chicken mollit skateboard vegan viral officia cray. Fingerstache biodiesel before they sold out sed consectetur. Snackwave raw denim tote bag, consequat hammock dolore taiyaki shoreditch lorem intelligentsia godard. Schlitz quinoa XOXO, af knausgaard lyft et blog direct trade mixtape est. Craft beer schlitz eu hell of jean shorts. Tumblr typewriter VHS, tattooed literally ut fixie squid chia pickled four loko.
+        ]]>
+    </string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="close">Close</string>
 </resources>
