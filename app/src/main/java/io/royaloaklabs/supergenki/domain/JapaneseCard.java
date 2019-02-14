@@ -31,7 +31,7 @@ public class JapaneseCard {
   }
 
   public static List<JapaneseCard> buildListFromCursor(Cursor cursor) {
-    List<JapaneseCard> mCards = new LinkedList<JapaneseCard>();
+    List<JapaneseCard> japaneseCards = new LinkedList<JapaneseCard>();
 
     for (; cursor.moveToNext(); ) {
       JapaneseCard jpCard = new JapaneseCard();
@@ -60,10 +60,10 @@ public class JapaneseCard {
       }
       jpCard.setEnglishText(sbSense.toString());
 
-      mCards.add(jpCard);
+      japaneseCards.add(jpCard);
     }
 
-    return mCards;
+    return japaneseCards;
   }
 
   @Override
