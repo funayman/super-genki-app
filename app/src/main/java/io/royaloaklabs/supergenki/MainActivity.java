@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,9 +17,9 @@ import io.royaloaklabs.supergenki.adapter.RecyclerViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 
 public class MainActivity extends AppCompatActivity {
-
+  public static final String MESSAGE = "SERIALIZEDFORM";
   private TextView mTextMessage;
-  private RecyclerView rv;
+  private RecyclerView recyclerView;
   private RecyclerView.Adapter mAdapter;
   private RecyclerView.LayoutManager mLayoutManager;
 
@@ -63,18 +62,19 @@ public class MainActivity extends AppCompatActivity {
 
     final MenuItem searchMenuItem = menu.findItem(R.id.search);
     final SearchView searchView   = (SearchView) searchMenuItem.getActionView();
+
     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
       @Override
       public boolean onQueryTextSubmit(String q) {
         mAdapter = new RecyclerViewAdapter(dictionaryAdapter.Search(q));
-        rv.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);
         return false;
       }
 
       @Override
       public boolean onQueryTextChange(String q) {
         mAdapter = new RecyclerViewAdapter(dictionaryAdapter.Search(q));
-        rv.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);
         return false;
       }
     });
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public boolean onClose() {
         mAdapter = new RecyclerViewAdapter(dictionaryAdapter.getRandomData());
-        rv.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);
         return false;
       }
     });
@@ -98,19 +98,15 @@ public class MainActivity extends AppCompatActivity {
 
     dictionaryAdapter = new DictionaryAdapter(getApplicationContext());
 
-    // mTextMessage = (TextView) findViewById(R.id.message);
-    // BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-    // navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-    rv = (RecyclerView)findViewById(R.id.rv);
-    rv.setHasFixedSize(true);
+    recyclerView = (RecyclerView)findViewById(R.id.rv);
+    recyclerView.setHasFixedSize(true);
 
     // use a linear layout manager
     mLayoutManager = new LinearLayoutManager(this);
-    rv.setLayoutManager(mLayoutManager);
+    recyclerView.setLayoutManager(mLayoutManager);
 
 
     mAdapter = new RecyclerViewAdapter(dictionaryAdapter.getRandomData());
-    rv.setAdapter(mAdapter);
+    recyclerView.setAdapter(mAdapter);
   }
 }
