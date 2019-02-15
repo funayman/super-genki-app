@@ -43,7 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     holder.englishText.setText(japaneseCards.get(position).getSensesAsString());
 
-    holder.serializedForm = japaneseCards.get(position).getKanji()+ "||"
+    holder.serializedForm = holder.kanjiText.getText() + "||"
         + japaneseCards.get(position).getSensesAsString()
         + "||" + japaneseCards.get(position).getKana();
   }
