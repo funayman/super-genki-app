@@ -93,11 +93,7 @@ public class MainActivity extends AppCompatActivity {
         }
         try {
           mAdapter = currentTask.execute(q).get(2000, TimeUnit.MILLISECONDS);
-        } catch(ExecutionException e) {
-          mAdapter = currentAdapter;
-        } catch(InterruptedException e) {
-          mAdapter = currentAdapter;
-        } catch(TimeoutException e) {
+        } catch(ExecutionException | InterruptedException | TimeoutException e) {
           mAdapter = currentAdapter;
         } finally {
           recyclerView.setAdapter(mAdapter);
