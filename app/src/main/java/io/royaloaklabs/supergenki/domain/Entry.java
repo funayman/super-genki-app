@@ -9,7 +9,7 @@ public class Entry {
 
   // Constants
   public static final String DELIMITER = " ";
-  public static final String SENSE_DELIMITER = "(SG)";
+  public static final String SENSE_DELIMITER = "\\(SG\\)";
   public static final String GLOSS_DELIMITER = ";;";
 
   // DB Constants
