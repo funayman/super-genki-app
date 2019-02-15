@@ -13,10 +13,10 @@ import io.royaloaklabs.supergenki.domain.Sense;
 
 public class DictionaryAdapter {
   private static final String RANDOM_DATA_SQL =
-      String.format("SELECT %s, %s, %s, %s, FROM %s ORDER BY RANDOM() LIMIT 20",
+      String.format("SELECT %s, %s, %s, %s FROM %s ORDER BY RANDOM() LIMIT 20",
           Entry.ID_ROW_NAME, Entry.KANJI_ROW_NAME, Entry.KANA_ROW_NAME, Entry.ENGLISH_ROW_NAME, Entry.ENTRY_TABLE_NAME);
 
-  private static final String QUERY_SQL = String.format("SELECT %s, %s, %s, %s, FROM %s WHERE %s MATCH ?",
+  private static final String QUERY_SQL = String.format("SELECT %s, %s, %s, %s FROM %s WHERE %s MATCH ?",
       Entry.ID_ROW_NAME, Entry.KANJI_ROW_NAME, Entry.KANA_ROW_NAME, Entry.ENGLISH_ROW_NAME,
       Entry.ENTRY_TABLE_NAME, Entry.ENTRY_TABLE_NAME);
 
@@ -44,11 +44,11 @@ public class DictionaryAdapter {
     List<Entry> mEntries = new ArrayList<>(cursor.getCount());
     for(; cursor.moveToNext(); ) {
       // TODO fix this ugliness
-      int id = cursor.getInt(cursor.getColumnIndex("id"));
-      List<String> kanji = Arrays.asList(
-          cursor.getString(cursor.getColumnIndex(Entry.KANJI_ROW_NAME)).split(Entry.DELIMITER));
-      List<String> kana = Arrays.asList(
-          cursor.getString(cursor.getColumnIndex(Entry.KANA_ROW_NAME)).split(Entry.DELIMITER));
+      long id = cursor.getLong(cursor.getColumnIndex(Entry.ID_ROW_NAME));
+      List<String> kanji = new ArrayList<>(
+          Arrays.asList(cursor.getString(cursor.getColumnIndex(Entry.KANJI_ROW_NAME)).split(Entry.DELIMITER)));
+      List<String> kana = new ArrayList<>(
+          Arrays.asList(cursor.getString(cursor.getColumnIndex(Entry.KANA_ROW_NAME)).split(Entry.DELIMITER)));
       List<Sense> senses = Sense.buildFromRawData(cursor.getString(cursor.getColumnIndex(Entry.ENGLISH_ROW_NAME)));
 
       mEntries.add(new Entry.Builder()
