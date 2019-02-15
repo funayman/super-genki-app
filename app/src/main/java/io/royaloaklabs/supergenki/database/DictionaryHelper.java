@@ -27,15 +27,15 @@ public class DictionaryHelper extends SQLiteOpenHelper {
     if(this.hasNoDatabase()) {
       try {
         this.copyInternalDatabase();
-      } catch (IOException e) {
+      } catch(IOException e) {
         // DB file does not exist in the assets directory
         // create an in-memory database to work with
         mDatabase = SQLiteDatabase.create(null);
         mDatabase.execSQL("CREATE VIRTUAL TABLE einihongo USING fts4(kanji,kana,gloss)");
         mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?)", new String[]{"此れ;是;是れ", "これ", "this (indicating an item near the speaker, the action of the speaker, or the current topic)"});
-        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?)", new String[]{"", "は", "topic marker particle||indicates contrast with another option (stated or unstated)||adds emphasis"});
+        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?)", new String[]{"", "は", "topic marker particle(SG)indicates contrast with another option (stated or unstated)(SG)adds emphasis"});
         mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?)", new String[]{"", "テスト", "test"});
-        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?)", new String[]{"", "データ", "data||datum"});
+        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?)", new String[]{"", "データ", "data(SG)datum"});
       }
     }
 
@@ -79,7 +79,7 @@ public class DictionaryHelper extends SQLiteOpenHelper {
 
     byte[] buffer = new byte[1028];
     int length;
-    while ((length = is.read(buffer)) > 0) {
+    while((length = is.read(buffer)) > 0) {
       os.write(buffer, 0, length);
     }
 
