@@ -15,6 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.royaloaklabs.supergenki.adapter.RecyclerViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
+import io.royaloaklabs.supergenki.database.tasks.QueryDatabaseTask;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class MainActivity extends AppCompatActivity {
   public static final String MESSAGE = "SERIALIZEDFORM";
@@ -27,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
+    switch(item.getItemId()) {
       case R.id.nav_about:
         // User chose the "About" item, show the app settings UI...
         showAboutDialog();
@@ -46,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tv = (TextView) dialogView.findViewById(R.id.about_dialog_textview);
     String sourceString = getString(R.string.about_dialog_text);
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
       tv.setText(Html.fromHtml(sourceString, Html.FROM_HTML_MODE_LEGACY));
     } else {
       tv.setText(Html.fromHtml(sourceString));
@@ -61,21 +66,42 @@ public class MainActivity extends AppCompatActivity {
     inflater.inflate(R.menu.navigation, menu);
 
     final MenuItem searchMenuItem = menu.findItem(R.id.search);
-    final SearchView searchView   = (SearchView) searchMenuItem.getActionView();
+    final SearchView searchView = (SearchView) searchMenuItem.getActionView();
 
     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+      QueryDatabaseTask currentTask = null;
+
       @Override
       public boolean onQueryTextSubmit(String q) {
-        mAdapter = new RecyclerViewAdapter(dictionaryAdapter.Search(q));
-        recyclerView.setAdapter(mAdapter);
+        doQuery(q);
         return false;
       }
 
       @Override
       public boolean onQueryTextChange(String q) {
-        mAdapter = new RecyclerViewAdapter(dictionaryAdapter.Search(q));
-        recyclerView.setAdapter(mAdapter);
+        doQuery(q);
         return false;
+      }
+
+      private void doQuery(String q) {
+        RecyclerView.Adapter currentAdapter = mAdapter;
+        if(null == currentTask) {
+          currentTask = new QueryDatabaseTask(dictionaryAdapter);
+        } else {
+          currentTask.cancel(true);
+          currentTask = new QueryDatabaseTask(dictionaryAdapter);
+        }
+        try {
+          mAdapter = currentTask.execute(q).get(2000, TimeUnit.MILLISECONDS);
+        } catch(ExecutionException e) {
+          mAdapter = currentAdapter;
+        } catch(InterruptedException e) {
+          mAdapter = currentAdapter;
+        } catch(TimeoutException e) {
+          mAdapter = currentAdapter;
+        } finally {
+          recyclerView.setAdapter(mAdapter);
+        }
       }
     });
 
@@ -98,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
     dictionaryAdapter = new DictionaryAdapter(getApplicationContext());
 
-    recyclerView = (RecyclerView)findViewById(R.id.rv);
+    recyclerView = (RecyclerView) findViewById(R.id.rv);
     recyclerView.setHasFixedSize(true);
 
     // use a linear layout manager
