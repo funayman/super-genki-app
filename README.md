@@ -1,4 +1,4 @@
-# super-genki-app
+# SuperGenki
 
 ## Super Genki Database
 The database for Super Genki is based on the [JMDict Project](http://edrdg.org/jmdict/j_jmdict.html), please click on the link for more information about the project.
