@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.royaloaklabs.supergenki.adapter.RecyclerViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
+import io.royaloaklabs.supergenki.database.tasks.QueryDatabaseTask;
+
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
   public static final String MESSAGE = "SERIALIZEDFORM";
@@ -64,18 +67,37 @@ public class MainActivity extends AppCompatActivity {
     final SearchView searchView   = (SearchView) searchMenuItem.getActionView();
 
     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+      QueryDatabaseTask currentTask = null;
+
       @Override
       public boolean onQueryTextSubmit(String q) {
-        mAdapter = new RecyclerViewAdapter(dictionaryAdapter.Search(q));
-        recyclerView.setAdapter(mAdapter);
+        doQuery(q);
         return false;
       }
 
       @Override
       public boolean onQueryTextChange(String q) {
-        mAdapter = new RecyclerViewAdapter(dictionaryAdapter.Search(q));
-        recyclerView.setAdapter(mAdapter);
+        doQuery(q);
         return false;
+      }
+
+      private void doQuery(String q) {
+        RecyclerView.Adapter currentAdapter = mAdapter;
+        if(null == currentTask) {
+          currentTask = new QueryDatabaseTask(dictionaryAdapter);
+        } else {
+          currentTask.cancel(true);
+          currentTask = new QueryDatabaseTask(dictionaryAdapter);
+        }
+        try {
+          mAdapter = currentTask.execute(q).get();
+        } catch(ExecutionException e) {
+          mAdapter = currentAdapter;
+        } catch(InterruptedException e) {
+          mAdapter = currentAdapter;
+        } finally {
+          recyclerView.setAdapter(mAdapter);
+        }
       }
     });
 
