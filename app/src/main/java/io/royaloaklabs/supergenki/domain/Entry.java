@@ -60,6 +60,29 @@ public class Entry {
     return senses;
   }
 
+  public String getSensesAsString() {
+   if(this.senses.size() == 1) {
+     return this.senses.get(0).toJoinedString();
+   }
+
+    if(this.senses.size() == 2) {
+      return String.format("%s; %s", this.senses.get(0).toJoinedString(), this.senses.get(1).toJoinedString());
+    }
+
+    if(this.senses.size() == 3) {
+      return String.format("%s; %s; %s",
+          this.senses.get(0).toJoinedString(), this.senses.get(1).toJoinedString(), this.senses.get(2).toJoinedString());
+    }
+
+    StringBuilder sb = new StringBuilder();
+    sb.append(this.senses.get(0).toJoinedString());
+    for(int i=1; i<this.senses.size(); i++) {
+      sb.append("; ");
+      sb.append(this.senses.get(i));
+    }
+    return sb.toString();
+  }
+
   public static class Builder {
     private long id;
     private String kanji;

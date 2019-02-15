@@ -2,7 +2,6 @@ package io.royaloaklabs.supergenki.domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Sense {
@@ -28,5 +27,27 @@ public class Sense {
       senseList.add(new Sense(sense));
     }
     return senseList;
+  }
+
+  public String toJoinedString() {
+    if(this.gloss.size() == 1) {
+      return this.gloss.get(0);
+    }
+
+    if(this.gloss.size() == 2) {
+      return String.format("%s, %s", this.gloss.get(0), this.gloss.get(1));
+    }
+
+    if(this.gloss.size() == 3) {
+      return String.format("%s, %s, %s", this.gloss.get(0), this.gloss.get(1), this.gloss.get(2));
+    }
+
+    StringBuilder sb = new StringBuilder();
+    sb.append(this.gloss.get(0));
+    for(int i=1; i<this.gloss.size(); i++) {
+      sb.append(", ");
+      sb.append(this.gloss.get(i));
+    }
+    return sb.toString();
   }
 }
