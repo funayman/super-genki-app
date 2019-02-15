@@ -14,6 +14,9 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayShowHomeEnabled(true);
+
     Intent intent = getIntent();
     setContentView(R.layout.activity_detailed_japanese);
     String serializedForm = intent.getStringExtra(MainActivity.MESSAGE);
@@ -38,5 +41,11 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
       kanaText.setVisibility(View.GONE);
     }
 
+  }
+
+  @Override
+  public boolean onSupportNavigateUp(){
+    finish();
+    return true;
   }
 }

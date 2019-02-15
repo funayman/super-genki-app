@@ -27,8 +27,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
   @Override
   public JapaneseCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.japanese_cardview, parent, false);
-    JapaneseCardViewHolder jcvh = new JapaneseCardViewHolder(v);
-    return jcvh;
+    JapaneseCardViewHolder japaneseCardViewHolder = new JapaneseCardViewHolder(v);
+    return japaneseCardViewHolder;
   }
 
   @Override
@@ -40,7 +40,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
       holder.kanjiText.setText(japaneseCards.get(position).getKanji());
       holder.kanaText.setText(japaneseCards.get(position).getKana());
     }
-
     holder.englishText.setText(japaneseCards.get(position).getSensesAsString());
 
     holder.serializedForm = holder.kanjiText.getText() + "||"
