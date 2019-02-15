@@ -49,6 +49,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/pronounceView"
                 android:gravity="left"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textSize="18sp" />
         </RelativeLayout>
 
