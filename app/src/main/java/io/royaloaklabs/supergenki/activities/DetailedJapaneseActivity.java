@@ -26,7 +26,8 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
     //Update text
     TextView japaneseText = (TextView) findViewById(R.id.detailedJapaneseText);
     TextView englishText  = (TextView) findViewById(R.id.detailedTranslationView);
-    TextView kanaText     = (TextView) findViewById(R.id.detailedPronounceView);
+    TextView kanaText     = (TextView) findViewById(R.id.detailedKanaView);
+    TextView romajiText   = (TextView) findViewById(R.id.detailedRomajiView);
 
     japaneseText.setText(extractedText[0]);
     if(extractedText[1] != null) {
@@ -44,6 +45,12 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
       kanaText.setText("Kana: " + extractedText[2]);
     } else {
       kanaText.setVisibility(View.GONE);
+    }
+
+    if(extractedText[3] != null) {
+      romajiText.setText("Romaji: " + extractedText[3]);
+    } else {
+      romajiText.setVisibility(View.GONE);
     }
 
   }
