@@ -30,7 +30,12 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
 
     japaneseText.setText(extractedText[0]);
     if(extractedText[1] != null) {
-      englishText.setText("English: " + extractedText[1]);
+      String[] splits = extractedText[1].split(";");
+      String output   = "";
+      for(String fragment : splits) {
+        output = output + fragment.trim() + "\n";
+      }
+      englishText.setText("English: " + output);
     } else {
       englishText.setVisibility(View.GONE);
     }
