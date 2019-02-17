@@ -31,11 +31,11 @@ public class DictionaryHelper extends SQLiteOpenHelper {
         // DB file does not exist in the assets directory
         // create an in-memory database to work with
         mDatabase = SQLiteDatabase.create(null);
-        mDatabase.execSQL("CREATE VIRTUAL TABLE einihongo USING fts4(kanji,kana,gloss)");
-        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?)", new String[]{"此れ;是;是れ", "これ", "this (indicating an item near the speaker, the action of the speaker, or the current topic)"});
-        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?)", new String[]{"", "は", "topic marker particle(SG)indicates contrast with another option (stated or unstated)(SG)adds emphasis"});
-        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?)", new String[]{"", "テスト", "test"});
-        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?)", new String[]{"", "データ", "data(SG)datum"});
+        mDatabase.execSQL("CREATE VIRTUAL TABLE einihongo USING fts4(kanji,kana,gloss,romaji)");
+        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?, ?)", new String[]{"此れ;是;是れ", "これ", "this (indicating an item near the speaker, the action of the speaker, or the current topic)", "cool-beans"});
+        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?, ?)", new String[]{"", "は", "topic marker particle(SG)indicates contrast with another option (stated or unstated)(SG)adds emphasis", "romanji"});
+        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?, ?)", new String[]{"", "テスト", "test", "testing"});
+        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?, ?)", new String[]{"", "データ", "data(SG)datum" , "yo"});
       }
     }
 

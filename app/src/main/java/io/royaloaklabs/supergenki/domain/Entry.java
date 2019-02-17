@@ -1,7 +1,5 @@
 package io.royaloaklabs.supergenki.domain;
 
-import android.database.Cursor;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -14,10 +12,11 @@ public class Entry {
 
   // DB Constants
   public static final String ENTRY_TABLE_NAME = "einihongo";
-  public static final String ID_ROW_NAME = "docid";
-  public static final String KANJI_ROW_NAME = "kanji";
-  public static final String KANA_ROW_NAME = "kana";
-  public static final String ENGLISH_ROW_NAME = "gloss";
+  public static final String ID_COL_NAME = "docid";
+  public static final String KANJI_COL_NAME = "kanji";
+  public static final String KANA_COL_NAME = "kana";
+  public static final String ENGLISH_COL_NAME = "gloss";
+  public static final String ROMAJI_COL_NAME = "romaji";
 
   private long id;
 
@@ -29,6 +28,8 @@ public class Entry {
 
   private List<Sense> senses;
 
+  private String romaji;
+
   private Entry() { } // empty constructor
 
   private Entry(Builder builder) {
@@ -38,6 +39,7 @@ public class Entry {
     this.kana = builder.kana;
     this.kanaAlt = builder.kanaAlt;
     this.senses = builder.senses;
+    this.romaji = builder.romaji;
   }
 
   public String getKanji() {
@@ -59,6 +61,8 @@ public class Entry {
   public List<Sense> getSenses() {
     return senses;
   }
+
+  public String getRomaji() { return romaji; }
 
   public String getSensesAsString() {
    if(this.senses.size() == 1) {
@@ -92,6 +96,8 @@ public class Entry {
     private List<String> kanaAlt;
 
     private List<Sense> senses;
+
+    private String romaji;
 
     public Builder() {
       id = 0;
@@ -140,6 +146,11 @@ public class Entry {
 
     public Builder setSenses(List<Sense> senses) {
       this.senses = senses;
+      return this;
+    }
+
+    public Builder setRomaji(String romaji) {
+      this.romaji = romaji;
       return this;
     }
   }
