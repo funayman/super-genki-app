@@ -15,8 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.royaloaklabs.supergenki.adapter.RecyclerViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
+import io.royaloaklabs.supergenki.database.tasks.DatabaseQueryTask;
 import io.royaloaklabs.supergenki.database.tasks.QueryDatabaseTask;
+import io.royaloaklabs.supergenki.domain.Entry;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -69,36 +72,27 @@ public class MainActivity extends AppCompatActivity {
     final SearchView searchView = (SearchView) searchMenuItem.getActionView();
 
     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-      QueryDatabaseTask currentTask = null;
+      Updater updater = new Updater() {
+        @Override
+        public void updateRecyclerListView(List<Entry> entries) {
+          mAdapter = new RecyclerViewAdapter(entries);
+          recyclerView.setAdapter(mAdapter);
+        }
+      };
+
 
       @Override
       public boolean onQueryTextSubmit(String q) {
-        doQuery(q);
+        new DatabaseQueryTask(updater, dictionaryAdapter).execute(q);
         return false;
       }
 
       @Override
       public boolean onQueryTextChange(String q) {
-        doQuery(q);
+        new DatabaseQueryTask(updater, dictionaryAdapter).execute(q);
         return false;
       }
 
-      private void doQuery(String q) {
-        RecyclerView.Adapter currentAdapter = mAdapter;
-        if(null == currentTask) {
-          currentTask = new QueryDatabaseTask(dictionaryAdapter);
-        } else {
-          currentTask.cancel(true);
-          currentTask = new QueryDatabaseTask(dictionaryAdapter);
-        }
-        try {
-          mAdapter = currentTask.execute(q).get(2000, TimeUnit.MILLISECONDS);
-        } catch(ExecutionException | InterruptedException | TimeoutException e) {
-          mAdapter = currentAdapter;
-        } finally {
-          recyclerView.setAdapter(mAdapter);
-        }
-      }
     });
 
     // repopulate the ListView with random entries when the user closes the search bar
