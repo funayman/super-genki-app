@@ -24,7 +24,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/japaneseText"
+                android:id="@+id/kanjiText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -36,18 +36,18 @@
                 app:fontFamily="sans-serif-condensed-medium" />
 
             <TextView
-                android:id="@+id/pronounceView"
+                android:id="@+id/kanaText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/japaneseText"
+                android:layout_below="@+id/kanjiText"
                 android:gravity="left"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/translationView"
+                android:id="@+id/englishText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/pronounceView"
+                android:layout_below="@+id/kanaText"
                 android:gravity="left"
                 android:ellipsize="end"
                 android:maxLines="1"

@@ -42,6 +42,10 @@ public class Entry {
     this.romaji = builder.romaji;
   }
 
+  public long getId() {
+    return id;
+  }
+
   public String getKanji() {
     return kanji;
   }

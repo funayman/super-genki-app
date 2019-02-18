@@ -32,10 +32,10 @@ public class DictionaryHelper extends SQLiteOpenHelper {
         // create an in-memory database to work with
         mDatabase = SQLiteDatabase.create(null);
         mDatabase.execSQL("CREATE VIRTUAL TABLE einihongo USING fts4(kanji,kana,gloss,romaji)");
-        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?, ?)", new String[]{"此れ;是;是れ", "これ", "this (indicating an item near the speaker, the action of the speaker, or the current topic)", "kore"});
-        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?, ?)", new String[]{"", "は", "topic marker particle(SG)indicates contrast with another option (stated or unstated)(SG)adds emphasis", "wa"});
-        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?, ?)", new String[]{"", "テスト", "test", "tesuto"});
-        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?, ?)", new String[]{"", "データ", "data(SG)datum" , "deita"});
+        mDatabase.execSQL("INSERT INTO einihongo(docid,kanji,kana,gloss,romaji) VALUES(?, ?, ?, ?, ?)", new String[]{"1", "此れ;是;是れ", "これ", "this (indicating an item near the speaker, the action of the speaker, or the current topic)", "kore"});
+        mDatabase.execSQL("INSERT INTO einihongo(docid,kanji,kana,gloss,romaji) VALUES(?, ?, ?, ?, ?)", new String[]{"2", "", "は", "topic marker particle(SG)indicates contrast with another option (stated or unstated)(SG)adds emphasis", "wa"});
+        mDatabase.execSQL("INSERT INTO einihongo(docid,kanji,kana,gloss,romaji) VALUES(?, ?, ?, ?, ?)", new String[]{"3", "", "テスト", "test", "tesuto"});
+        mDatabase.execSQL("INSERT INTO einihongo(docid,kanji,kana,gloss,romaji) VALUES(?, ?, ?, ?, ?)", new String[]{"4", "", "データ", "data(SG)datum" , "deita"});
       }
     }
 

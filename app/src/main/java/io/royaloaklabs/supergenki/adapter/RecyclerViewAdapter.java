@@ -68,17 +68,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public JapaneseCardViewHolder(View itemView) {
       super(itemView);
       cardView = (CardView) itemView.findViewById(R.id.cardView);
-      kanjiText = (TextView) itemView.findViewById(R.id.japaneseText);
-      kanaText = (TextView) itemView.findViewById(R.id.pronounceView);
-      englishText = (TextView) itemView.findViewById(R.id.translationView);
+      kanjiText = (TextView) itemView.findViewById(R.id.kanjiText);
+      kanaText = (TextView) itemView.findViewById(R.id.kanaText);
+      englishText = (TextView) itemView.findViewById(R.id.englishText);
 
       itemView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
           Intent intent = new Intent(view.getContext(), DetailedJapaneseActivity.class);
-          intent.putExtra(MainActivity.MESSAGE, serializedForm);
           view.getContext().startActivity(intent);
-
         }
       });
     }

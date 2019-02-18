@@ -13,7 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import io.royaloaklabs.supergenki.adapter.RecyclerViewAdapter;
+import io.royaloaklabs.supergenki.adapter.DictionaryJapaneseAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.database.tasks.QueryDatabaseTask;
 
@@ -22,8 +22,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class MainActivity extends AppCompatActivity {
-  public static final String MESSAGE = "SERIALIZEDFORM";
-  private TextView mTextMessage;
   private RecyclerView recyclerView;
   private RecyclerView.Adapter mAdapter;
   private RecyclerView.LayoutManager mLayoutManager;
@@ -105,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     searchView.setOnCloseListener(new SearchView.OnCloseListener() {
       @Override
       public boolean onClose() {
-        mAdapter = new RecyclerViewAdapter(dictionaryAdapter.getRandomData());
+        mAdapter = new DictionaryJapaneseAdapter(dictionaryAdapter.getRandomData());
         recyclerView.setAdapter(mAdapter);
         return false;
       }
@@ -128,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     recyclerView.setLayoutManager(mLayoutManager);
 
 
-    mAdapter = new RecyclerViewAdapter(dictionaryAdapter.getRandomData());
+    mAdapter = new DictionaryJapaneseAdapter(dictionaryAdapter.getRandomData());
     recyclerView.setAdapter(mAdapter);
   }
 }

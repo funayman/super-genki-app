@@ -1,10 +1,11 @@
 package io.royaloaklabs.supergenki.database.tasks;
 
 import android.os.AsyncTask;
+import io.royaloaklabs.supergenki.adapter.DictionaryJapaneseAdapter;
 import io.royaloaklabs.supergenki.adapter.RecyclerViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 
-public class QueryDatabaseTask extends AsyncTask<String, Integer, RecyclerViewAdapter> {
+public class QueryDatabaseTask extends AsyncTask<String, Integer, DictionaryJapaneseAdapter> {
   private DictionaryAdapter dictionaryAdapter;
 
   public QueryDatabaseTask(DictionaryAdapter dictionaryAdapter) {
@@ -12,7 +13,7 @@ public class QueryDatabaseTask extends AsyncTask<String, Integer, RecyclerViewAd
   }
 
   @Override
-  public RecyclerViewAdapter doInBackground(String... q) {
-    return new RecyclerViewAdapter(dictionaryAdapter.Search(q[0]));
+  public DictionaryJapaneseAdapter doInBackground(String... q) {
+    return new DictionaryJapaneseAdapter(dictionaryAdapter.Search(q[0]));
   }
 }
