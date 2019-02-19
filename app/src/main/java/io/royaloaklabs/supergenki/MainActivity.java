@@ -15,11 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.royaloaklabs.supergenki.adapter.RecyclerViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
-import io.royaloaklabs.supergenki.database.tasks.QueryDatabaseTask;
-
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import io.royaloaklabs.supergenki.database.tasks.DatabaseQueryTask;
 
 public class MainActivity extends AppCompatActivity {
   public static final String MESSAGE = "SERIALIZEDFORM";
@@ -69,35 +65,28 @@ public class MainActivity extends AppCompatActivity {
     final SearchView searchView = (SearchView) searchMenuItem.getActionView();
 
     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-      QueryDatabaseTask currentTask = null;
+      DatabaseQueryTask task = null;
 
       @Override
       public boolean onQueryTextSubmit(String q) {
-        doQuery(q);
+        if(task != null) {
+          task.cancel(Boolean.TRUE);
+          task = null;
+        }
+        task = new DatabaseQueryTask((RecyclerViewAdapter) mAdapter, dictionaryAdapter);
+        task.execute(q);
         return false;
       }
 
       @Override
       public boolean onQueryTextChange(String q) {
-        doQuery(q);
-        return false;
-      }
-
-      private void doQuery(String q) {
-        RecyclerView.Adapter currentAdapter = mAdapter;
-        if(null == currentTask) {
-          currentTask = new QueryDatabaseTask(dictionaryAdapter);
-        } else {
-          currentTask.cancel(true);
-          currentTask = new QueryDatabaseTask(dictionaryAdapter);
+        if(task != null) {
+          task.cancel(Boolean.TRUE);
+          task = null;
         }
-        try {
-          mAdapter = currentTask.execute(q).get(2000, TimeUnit.MILLISECONDS);
-        } catch(ExecutionException | InterruptedException | TimeoutException e) {
-          mAdapter = currentAdapter;
-        } finally {
-          recyclerView.setAdapter(mAdapter);
-        }
+        task = new DatabaseQueryTask((RecyclerViewAdapter) mAdapter, dictionaryAdapter);
+        task.execute(q);
+        return Boolean.TRUE;
       }
     });
 
