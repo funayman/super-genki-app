@@ -14,18 +14,18 @@ import io.royaloaklabs.supergenki.domain.Entry;
 
 import java.util.List;
 
-public class DictionaryJapaneseAdapter extends RecyclerView.Adapter<DictionaryJapaneseAdapter.ViewHolder> {
+public class DictionaryViewAdapter extends RecyclerView.Adapter<DictionaryViewAdapter.ViewHolder> {
 
   private List<Entry> mEntryList;
 
-  public DictionaryJapaneseAdapter(List<Entry> mEntryList) {
+  public DictionaryViewAdapter(List<Entry> mEntryList) {
     this.mEntryList = mEntryList;
   }
 
   @NonNull
   @Override
   public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    return new DictionaryJapaneseAdapter.ViewHolder(
+    return new DictionaryViewAdapter.ViewHolder(
         LayoutInflater.from(parent.getContext()).inflate(R.layout.japanese_cardview, parent, Boolean.FALSE));
   }
 
@@ -46,6 +46,11 @@ public class DictionaryJapaneseAdapter extends RecyclerView.Adapter<DictionaryJa
   @Override
   public int getItemCount() {
     return mEntryList.size();
+  }
+
+  public void updateEntries(List<Entry> mEntryList) {
+    this.mEntryList = mEntryList;
+    this.notifyDataSetChanged();
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
