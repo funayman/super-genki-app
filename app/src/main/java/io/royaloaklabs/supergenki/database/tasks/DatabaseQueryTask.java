@@ -1,17 +1,17 @@
 package io.royaloaklabs.supergenki.database.tasks;
 
 import android.os.AsyncTask;
-import io.royaloaklabs.supergenki.Updater;
+import io.royaloaklabs.supergenki.adapter.RecyclerViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.Entry;
 
 import java.util.List;
 
 public class DatabaseQueryTask extends AsyncTask<String, Void, List<Entry>> {
-  private Updater updater;
+  private RecyclerViewAdapter recyclerViewAdapter;
 
-  public DatabaseQueryTask(Updater updater, DictionaryAdapter dictionaryAdapter) {
-    this.updater = updater;
+  public DatabaseQueryTask(RecyclerViewAdapter recyclerViewAdapter, DictionaryAdapter dictionaryAdapter) {
+    this.recyclerViewAdapter = recyclerViewAdapter;
     this.dictionaryAdapter = dictionaryAdapter;
   }
 
@@ -25,6 +25,6 @@ public class DatabaseQueryTask extends AsyncTask<String, Void, List<Entry>> {
   @Override
   protected void onPostExecute(List<Entry> entries) {
     super.onPostExecute(entries);
-    this.updater.updateRecyclerListView(entries);
+    recyclerViewAdapter.update(entries);
   }
 }

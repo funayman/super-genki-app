@@ -16,13 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import io.royaloaklabs.supergenki.adapter.RecyclerViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.database.tasks.DatabaseQueryTask;
-import io.royaloaklabs.supergenki.database.tasks.QueryDatabaseTask;
-import io.royaloaklabs.supergenki.domain.Entry;
-
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 public class MainActivity extends AppCompatActivity {
   public static final String MESSAGE = "SERIALIZEDFORM";
@@ -72,27 +65,29 @@ public class MainActivity extends AppCompatActivity {
     final SearchView searchView = (SearchView) searchMenuItem.getActionView();
 
     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-      Updater updater = new Updater() {
-        @Override
-        public void updateRecyclerListView(List<Entry> entries) {
-          mAdapter = new RecyclerViewAdapter(entries);
-          recyclerView.setAdapter(mAdapter);
-        }
-      };
-
+      DatabaseQueryTask task = null;
 
       @Override
       public boolean onQueryTextSubmit(String q) {
-        new DatabaseQueryTask(updater, dictionaryAdapter).execute(q);
+        if(task != null) {
+          task.cancel(Boolean.TRUE);
+          task = null;
+        }
+        task = new DatabaseQueryTask((RecyclerViewAdapter) mAdapter, dictionaryAdapter);
+        task.execute(q);
         return false;
       }
 
       @Override
       public boolean onQueryTextChange(String q) {
-        new DatabaseQueryTask(updater, dictionaryAdapter).execute(q);
-        return false;
+        if(task != null) {
+          task.cancel(Boolean.TRUE);
+          task = null;
+        }
+        task = new DatabaseQueryTask((RecyclerViewAdapter) mAdapter, dictionaryAdapter);
+        task.execute(q);
+        return Boolean.TRUE;
       }
-
     });
 
     // repopulate the ListView with random entries when the user closes the search bar

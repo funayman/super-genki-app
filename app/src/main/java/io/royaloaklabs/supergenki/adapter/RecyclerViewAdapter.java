@@ -15,7 +15,6 @@ import io.royaloaklabs.supergenki.domain.Entry;
 
 import java.util.List;
 
-
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.JapaneseCardViewHolder> {
   List<Entry> japaneseCards;
 
@@ -45,6 +44,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     holder.serializedForm = holder.kanjiText.getText() + "||"
         + japaneseCards.get(position).getSensesAsString()
         + "||" + japaneseCards.get(position).getKana() + "||" + japaneseCards.get(position).getRomaji();
+  }
+
+  public void update(List<Entry> entries) {
+    this.japaneseCards = entries;
+    this.notifyDataSetChanged();
   }
 
   @NonNull
