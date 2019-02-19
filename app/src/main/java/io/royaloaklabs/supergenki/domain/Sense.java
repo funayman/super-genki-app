@@ -44,7 +44,7 @@ public class Sense {
 
     StringBuilder sb = new StringBuilder();
     sb.append(this.gloss.get(0));
-    for(int i=1; i<this.gloss.size(); i++) {
+    for(int i = 1; i < this.gloss.size(); i++) {
       sb.append(", ");
       sb.append(this.gloss.get(i));
     }

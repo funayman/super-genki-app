@@ -53,17 +53,34 @@
                         android:textSize="18sp"/>
 
                 <TextView
+                        android:id="@+id/detailedRomajiText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5sp"
+                        android:text="@string/romaji"
+                        android:layout_below="@id/detailedKanaView"/>
+
+                <TextView
                         android:id="@+id/detailedRomajiView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/detailedKanaView"
+                        android:layout_below="@+id/detailedRomajiText"
                         android:gravity="left"
                         android:textSize="18sp"/>
+
+                <TextView
+                        android:id="@+id/detailedEnglishText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5sp"
+                        android:text="@string/english"
+                        android:layout_below="@id/detailedRomajiView"/>
+
                 <TextView
                         android:id="@+id/detailedTranslationView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/detailedRomajiView"
+                        android:layout_below="@+id/detailedEnglishText"
                         android:gravity="left"
                         android:textSize="18sp"/>
             </RelativeLayout>

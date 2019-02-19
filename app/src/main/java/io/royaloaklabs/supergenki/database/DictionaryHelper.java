@@ -5,44 +5,34 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 public class DictionaryHelper extends SQLiteOpenHelper {
   private static final String DATABASE_NAME = "jisho-main.db";
   private static final int DATABASE_VERSION = 1;
   private final String DATABASE_PATH;
 
-  private SQLiteDatabase mDatabase;
+  private SQLiteDatabase database;
 
-  private final Context mContext;
+  private final Context context;
 
   public DictionaryHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    mContext = context;
-    DATABASE_PATH = String.format("%s/%s", mContext.getFilesDir().getAbsolutePath(), DATABASE_NAME);
+    this.context = context;
+    DATABASE_PATH = String.format("%s/%s", context.getFilesDir().getAbsolutePath(), DATABASE_NAME);
 
     if(this.hasNoDatabase()) {
       try {
         this.copyInternalDatabase();
       } catch(IOException e) {
-        // DB file does not exist in the assets directory
-        // create an in-memory database to work with
-        mDatabase = SQLiteDatabase.create(null);
-        mDatabase.execSQL("CREATE VIRTUAL TABLE einihongo USING fts4(kanji,kana,gloss,romaji)");
-        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?, ?)", new String[]{"此れ;是;是れ", "これ", "this (indicating an item near the speaker, the action of the speaker, or the current topic)", "kore"});
-        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?, ?)", new String[]{"", "は", "topic marker particle(SG)indicates contrast with another option (stated or unstated)(SG)adds emphasis", "wa"});
-        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?, ?)", new String[]{"", "テスト", "test", "tesuto"});
-        mDatabase.execSQL("INSERT INTO einihongo VALUES(?, ?, ?, ?)", new String[]{"", "データ", "data(SG)datum" , "deita"});
+        e.printStackTrace();
       }
     }
 
-    // set the main database as either the asset or the in-memory version
-    mDatabase = (mDatabase == null)
+    // TODO is this even needed after copy?
+    database = (database == null)
         ? SQLiteDatabase.openDatabase(DATABASE_PATH, null, SQLiteDatabase.OPEN_READONLY)
-        : mDatabase;
+        : database;
   }
 
   @Override
@@ -57,24 +47,16 @@ public class DictionaryHelper extends SQLiteOpenHelper {
 
   @Override
   public SQLiteDatabase getReadableDatabase() throws SQLException {
-    return mDatabase;
+    return database;
   }
 
   private boolean hasNoDatabase() {
-    SQLiteDatabase db = null;
-
-    try {
-      db = SQLiteDatabase.openDatabase(DATABASE_PATH, null, SQLiteDatabase.OPEN_READONLY);
-      db.close();
-    } catch(SQLException e) {
-      // do nothing, db doesn't exists
-    }
-
-    return db == null;
+    File db = this.context.getDatabasePath(DATABASE_NAME);
+    return db.exists();
   }
 
   private void copyInternalDatabase() throws IOException {
-    InputStream is = mContext.getAssets().open(DATABASE_NAME);
+    InputStream is = this.context.getAssets().open(DATABASE_NAME);
     OutputStream os = new FileOutputStream(DATABASE_PATH);
 
     byte[] buffer = new byte[1028];

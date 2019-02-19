@@ -29,4 +29,8 @@
     <string name="no">No</string>
     <string name="close">Close</string>
     <string name="EMPTY"/>
+
+    <!-- Detailed View -->
+    <string name="romaji">Romaji</string>
+    <string name="english">English</string>
 </resources>
