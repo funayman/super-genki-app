@@ -47,8 +47,9 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
   }
 
   @Override
-  protected void onStart() {
-    super.onStart();
+  protected void onResume() {
+    super.onResume();
+    this.dictionaryAdapter = new DictionaryAdapter(this);
 
     entry = dictionaryAdapter.getOne(entryId);
 
@@ -78,6 +79,12 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
       }
       englishText.setText(sb.toString());
     }
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    this.dictionaryAdapter = null;
   }
 
   @Override
