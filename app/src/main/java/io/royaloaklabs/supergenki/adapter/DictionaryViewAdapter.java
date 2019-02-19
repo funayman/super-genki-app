@@ -24,8 +24,8 @@ public class DictionaryViewAdapter extends RecyclerView.Adapter<DictionaryViewAd
   @NonNull
   @Override
   public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    return new DictionaryViewAdapter.ViewHolder(
-        LayoutInflater.from(parent.getContext()).inflate(R.layout.japanese_cardview, parent, Boolean.FALSE));
+    View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.japanese_cardview, parent, false);
+    return new ViewHolder(v);
   }
 
   @Override
