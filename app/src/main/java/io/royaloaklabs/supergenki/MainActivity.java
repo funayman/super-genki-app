@@ -3,6 +3,7 @@ package io.royaloaklabs.supergenki;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     } else {
       tv.setText(Html.fromHtml(sourceString));
     }
+    tv.setMovementMethod(LinkMovementMethod.getInstance());
 
     adb.setView(dialogView).setPositiveButton(R.string.close, null);
     adb.create().show();

@@ -6,22 +6,22 @@
 
     <string name="about_dialog_title">About Super Genki</string>
     <string name="about_dialog_text"><![CDATA[
-        put some details in here
+        <p>
+        Super Genki aims to be a general purpose app for Japanese language learners.
+        We encourage users and developers of the like to help contribute to the app in any way they can.
+        If you found a bug or want to make a contribution, you can checkout the source code at our <a href="https://githbub.com/funayman/super-genki-app">Github page</a>.
+        </p>
 
         <h1>The Team</h1>
-        <p>EZ-E and Dr. T bringing you some sweet, sweet, Japanese-English Dictionary.</p>
+        <p>Super Genki is developed by <b><a href="https://github.com/funayman">funayman</a></b> and <b><a href="https://github.com/Xsixteen">Xsixteen</a></b>.</p>
 
         <h1>Licence</h1>
-        <p>Super Genki is developed and open sourced under the <b>INSERT LICENCE HERE</b> licence.</p>
+        <p>Super Genki is open-source under the <b>Apache Licence 2.0</b>. You can read more about the licence <a href="https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)">here</a></p>
 
         <h1>FOSS Materials</h1>
+        <p>The Super Genki app could not have been created without the following open-source libraries and applications:</p>
 
-        <h3>JMDict</h3>
-        <p>The JMDict is an open source Japanese Dictionary with its own licence, which can be viewed here.</p>
-
-        <h1>Some Hipsum to round out the scroll view</h1>
-        <p>Lorem ipsum dolor amet laborum fingerstache try-hard, +1 dolor deserunt aliquip. Anim taxidermy franzen cupidatat ut bicycle rights. Jean shorts everyday carry tbh shaman tempor raclette anim keytar YOLO kale chips. Craft beer pitchfork shaman tote bag in. Cornhole mumblecore hot chicken fashion axe. Chicharrones snackwave meditation pour-over single-origin coffee actually post-ironic DIY man braid. Lorem laboris tumblr, disrupt subway tile et paleo nostrud YOLO.</p>
-        <p>Neutra direct trade aliquip hot chicken mollit skateboard vegan viral officia cray. Fingerstache biodiesel before they sold out sed consectetur. Snackwave raw denim tote bag, consequat hammock dolore taiyaki shoreditch lorem intelligentsia godard. Schlitz quinoa XOXO, af knausgaard lyft et blog direct trade mixtape est. Craft beer schlitz eu hell of jean shorts. Tumblr typewriter VHS, tattooed literally ut fixie squid chia pickled four loko.</p>
+        <h3><a href="http://edrdg.org/jmdict/j_jmdict.html">JMDict</a></h3>
         ]]>
     </string>
 
