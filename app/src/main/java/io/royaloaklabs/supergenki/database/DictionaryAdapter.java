@@ -24,14 +24,14 @@ public class DictionaryAdapter {
       Entry.ID_COL_NAME, Entry.KANJI_COL_NAME, Entry.KANA_COL_NAME, Entry.ENGLISH_COL_NAME,
       Entry.ROMAJI_COL_NAME, Entry.ENTRY_TABLE_NAME, Entry.ID_COL_NAME);
 
-  protected DictionaryHelper mDictHelper;
+  protected DictionaryHelper dictionaryHelper;
 
   public DictionaryAdapter(Context context) {
-    this.mDictHelper = new DictionaryHelper(context);
+    this.dictionaryHelper = new DictionaryHelper(context);
   }
 
   public List<Entry> Search(String q) {
-    SQLiteDatabase db = mDictHelper.getReadableDatabase();
+    SQLiteDatabase db = dictionaryHelper.getReadableDatabase();
     Cursor cursor = db.rawQuery(QUERY_SQL, new String[]{q + "*"});
     List<Entry> entryList = this.buildEntryListFromCursor(cursor);
     return entryList;
@@ -39,14 +39,14 @@ public class DictionaryAdapter {
 
 
   public List<Entry> getRandomData() {
-    SQLiteDatabase db = mDictHelper.getReadableDatabase();
+    SQLiteDatabase db = dictionaryHelper.getReadableDatabase();
     Cursor cursor = db.rawQuery(RANDOM_DATA_SQL, null);
     List<Entry> entryList = this.buildEntryListFromCursor(cursor);
     return entryList;
   }
 
   public Entry getOne(Long id) {
-    SQLiteDatabase db = mDictHelper.getReadableDatabase();
+    SQLiteDatabase db = dictionaryHelper.getReadableDatabase();
     Cursor cursor = db.rawQuery(GET_BY_ID_SQL, new String[]{id.toString()});
     List<Entry> entryList = this.buildEntryListFromCursor(cursor);
     db.close();

@@ -66,12 +66,14 @@ public class Entry {
     return senses;
   }
 
-  public String getRomaji() { return romaji; }
+  public String getRomaji() {
+    return romaji;
+  }
 
   public String getSensesAsString() {
-   if(this.senses.size() == 1) {
-     return this.senses.get(0).toJoinedString();
-   }
+    if(this.senses.size() == 1) {
+      return this.senses.get(0).toJoinedString();
+    }
 
     if(this.senses.size() == 2) {
       return String.format("%s; %s", this.senses.get(0).toJoinedString(), this.senses.get(1).toJoinedString());
@@ -84,7 +86,7 @@ public class Entry {
 
     StringBuilder sb = new StringBuilder();
     sb.append(this.senses.get(0).toJoinedString());
-    for(int i=1; i<this.senses.size(); i++) {
+    for(int i = 1; i < this.senses.size(); i++) {
       sb.append("; ");
       sb.append(this.senses.get(i));
     }

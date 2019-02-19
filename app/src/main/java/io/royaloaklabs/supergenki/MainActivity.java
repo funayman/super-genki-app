@@ -11,7 +11,6 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.loader.app.LoaderManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
@@ -20,8 +19,8 @@ import io.royaloaklabs.supergenki.database.tasks.DatabaseQueryTask;
 
 public class MainActivity extends AppCompatActivity {
   private RecyclerView recyclerView;
-  private DictionaryViewAdapter mAdapter;
-  private RecyclerView.LayoutManager mLayoutManager;
+  private DictionaryViewAdapter dictionaryViewAdapter;
+  private RecyclerView.LayoutManager layoutManager;
 
   private DictionaryAdapter dictionaryAdapter;
 
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
           task.cancel(Boolean.TRUE);
           task = null;
         }
-        task = new DatabaseQueryTask(dictionaryAdapter, mAdapter);
+        task = new DatabaseQueryTask(dictionaryAdapter, dictionaryViewAdapter);
         task.execute(q);
         return false;
       }
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
           task.cancel(Boolean.TRUE);
           task = null;
         }
-        task = new DatabaseQueryTask(dictionaryAdapter, mAdapter);
+        task = new DatabaseQueryTask(dictionaryAdapter, dictionaryViewAdapter);
         task.execute(q);
         return Boolean.TRUE;
       }
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     searchView.setOnCloseListener(new SearchView.OnCloseListener() {
       @Override
       public boolean onClose() {
-        mAdapter.updateEntries(dictionaryAdapter.getRandomData());
+        dictionaryViewAdapter.updateEntries(dictionaryAdapter.getRandomData());
         return false;
       }
     });
@@ -111,11 +110,11 @@ public class MainActivity extends AppCompatActivity {
     recyclerView.setHasFixedSize(true);
 
     // use a linear layout manager
-    mLayoutManager = new LinearLayoutManager(this);
-    recyclerView.setLayoutManager(mLayoutManager);
+    layoutManager = new LinearLayoutManager(this);
+    recyclerView.setLayoutManager(layoutManager);
 
 
-    mAdapter = new DictionaryViewAdapter(dictionaryAdapter.getRandomData());
-    recyclerView.setAdapter(mAdapter);
+    dictionaryViewAdapter = new DictionaryViewAdapter(dictionaryAdapter.getRandomData());
+    recyclerView.setAdapter(dictionaryViewAdapter);
   }
 }

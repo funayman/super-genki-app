@@ -1,7 +1,6 @@
 package io.royaloaklabs.supergenki.adapter;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,10 @@ import java.util.List;
 
 public class DictionaryViewAdapter extends RecyclerView.Adapter<DictionaryViewAdapter.ViewHolder> {
 
-  private List<Entry> mEntryList;
+  private List<Entry> entries;
 
-  public DictionaryViewAdapter(List<Entry> mEntryList) {
-    this.mEntryList = mEntryList;
+  public DictionaryViewAdapter(List<Entry> entries) {
+    this.entries = entries;
   }
 
   @NonNull
@@ -31,7 +30,7 @@ public class DictionaryViewAdapter extends RecyclerView.Adapter<DictionaryViewAd
 
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-    Entry entry = this.mEntryList.get(position);
+    Entry entry = this.entries.get(position);
 
     if(entry.getKanji().isEmpty()) {
       holder.kanjiText.setText(entry.getKana());
@@ -45,11 +44,11 @@ public class DictionaryViewAdapter extends RecyclerView.Adapter<DictionaryViewAd
 
   @Override
   public int getItemCount() {
-    return mEntryList.size();
+    return entries.size();
   }
 
   public void updateEntries(List<Entry> mEntryList) {
-    this.mEntryList = mEntryList;
+    this.entries = mEntryList;
     this.notifyDataSetChanged();
   }
 
@@ -68,8 +67,7 @@ public class DictionaryViewAdapter extends RecyclerView.Adapter<DictionaryViewAd
       itemView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          Log.v("DRT", "click enabled");
-          Entry entry = mEntryList.get(getAdapterPosition());
+          Entry entry = entries.get(getAdapterPosition());
           Intent intent = new Intent(v.getContext(), DetailedJapaneseActivity.class);
           intent.putExtra(DetailedJapaneseActivity.ENT_SEQ, entry.getId());
           v.getContext().startActivity(intent);

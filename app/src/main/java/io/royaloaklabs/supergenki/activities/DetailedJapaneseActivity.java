@@ -2,11 +2,9 @@ package io.royaloaklabs.supergenki.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import io.royaloaklabs.supergenki.MainActivity;
 import io.royaloaklabs.supergenki.R;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.Entry;
@@ -23,7 +21,7 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
   private TextView kanaText;
   private TextView romajiText;
 
-  private DictionaryAdapter mDictionaryAdapter;
+  private DictionaryAdapter dictionaryAdapter;
   private Entry entry;
 
   private Long entryId;
@@ -45,16 +43,14 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
     romajiText = findViewById(R.id.detailedRomajiView);
     englishText = findViewById(R.id.detailedTranslationView);
 
-    mDictionaryAdapter = new DictionaryAdapter(this);
-
-    Log.v("DRT", entryId.toString());
+    dictionaryAdapter = new DictionaryAdapter(this);
   }
 
   @Override
   protected void onStart() {
     super.onStart();
 
-    entry = mDictionaryAdapter.getOne(entryId);
+    entry = dictionaryAdapter.getOne(entryId);
 
     if(entry.getKanji().isEmpty()) {
       japaneseText.setText(entry.getKana());
@@ -77,8 +73,8 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
           senses.get(0).toJoinedString(), senses.get(1).toJoinedString(), senses.get(2).toJoinedString()));
     } else {
       StringBuilder sb = new StringBuilder();
-      for(int i=0; i<senses.size(); i++) {
-        sb.append(String.format("%d) %s\n", i+1, entry.getSenses().get(i).toJoinedString()));
+      for(int i = 0; i < senses.size(); i++) {
+        sb.append(String.format("%d) %s\n", i + 1, entry.getSenses().get(i).toJoinedString()));
       }
       englishText.setText(sb.toString());
     }
