@@ -63,6 +63,7 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
 
     romajiText.setText(entry.getRomaji());
 
+    // add to other card view
     List<Sense> senses = entry.getSenses();
     if(senses.size() == 1) {
       englishText.setText(senses.get(0).toJoinedString());
