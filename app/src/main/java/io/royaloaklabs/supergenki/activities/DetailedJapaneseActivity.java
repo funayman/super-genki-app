@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import io.royaloaklabs.supergenki.R;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.Entry;
@@ -25,6 +28,7 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
   private Entry entry;
 
   private Long entryId;
+  private AdView adView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,12 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
     getSupportActionBar().setDisplayShowHomeEnabled(true);
 
     setContentView(R.layout.activity_detailed_japanese);
+
+    //Enable Ads
+    MobileAds.initialize(this, "ca-app-pub-8769234461659052~4596379422");
+    adView              = findViewById(R.id.adBanner1);
+    AdRequest adRequest = new AdRequest.Builder().build();
+    adView.loadAd(adRequest);
 
     Intent intent = getIntent();
     entryId = intent.getLongExtra(ENT_SEQ, 0);
