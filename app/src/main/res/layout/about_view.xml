@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/about_dialog_title"
+              android:textSize="24dp"
+              android:textAlignment="center"
+              android:textColor="@color/colorPrimary"
+              android:textStyle="bold"
+              android:background="@color/colorAccent"
+              android:paddingVertical="10dp" />
+
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+        <TextView android:id="@+id/about_dialog_textview"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:padding="15dp"
+                  android:justificationMode="inter_word"
+                  tools:targetApi="o" />
+
+    </ScrollView>
+
+</LinearLayout>

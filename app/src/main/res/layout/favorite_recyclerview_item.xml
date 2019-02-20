@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:padding="20dp">
+
+    <sh.drt.supergenkiutil.furiganaview.FuriganaView
+            android:id="@+id/favJapaneseTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:baseTextSize="36dp"
+            app:furiganaColor="@color/colorPrimaryDark"
+            app:baseColor="@color/colorPrimaryDark"/>
+    <TextView
+            android:id="@+id/favEnglishTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5sp"
+            android:layout_below="@id/favJapaneseTextView" android:maxLines="1" android:singleLine="true"
+            android:textSize="18sp"/>
+
+</RelativeLayout>

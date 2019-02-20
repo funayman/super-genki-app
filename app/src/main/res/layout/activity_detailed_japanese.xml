@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activities.DetailedJapaneseActivity">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:src="@drawable/ic_star_border_black_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true" android:id="@+id/addRemoveFavorite"
+            app:layout_constraintBottom_toBottomOf="@+id/detailedScrollView"
+            app:layout_constraintRight_toRightOf="@+id/detailedScrollView" android:layout_margin="25dp"
+            android:focusable="true"/>
+
+
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                android:padding="6dp" android:id="@+id/detailedScrollView">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="6dp">
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    app:cardCornerRadius="4dp"
+                    app:contentPadding="4dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    android:id="@+id/japaneseDetailedCardView">
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="20dp">
+
+                    <sh.drt.supergenkiutil.furiganaview.FuriganaView
+                            android:id="@+id/japaneseTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:baseTextSize="36dp"
+                            app:furiganaColor="@color/colorPrimaryDark"
+                            app:baseColor="@color/colorPrimaryDark"/>
+                    <TextView
+                            android:id="@+id/detailedRomajiText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5sp"
+                            android:text="@string/romaji"
+                            android:layout_below="@id/japaneseTextView"/>
+
+                    <TextView
+                            android:id="@+id/detailedRomajiView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/detailedRomajiText"
+                            android:gravity="left"
+                            android:textSize="18sp"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:visibility="gone"
+                    app:cardCornerRadius="4dp"
+                    app:contentPadding="4dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    android:id="@+id/adCardView">
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    app:cardCornerRadius="4dp"
+                    app:contentPadding="4dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    android:id="@+id/japaneseDetailedCardViewEnglish">
+
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="20dp">
+                    <TextView
+                            android:id="@+id/detailedEnglishText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5sp"
+                            android:text="@string/english"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:typeface="serif"
+                            app:fontFamily="sans-serif-condensed-medium"/>
+
+                    <TextView
+                            android:id="@+id/detailedTranslationView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/detailedEnglishText"
+                            android:gravity="left"
+                            android:textSize="18sp"
+                            android:lineSpacingMultiplier="1.3"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
