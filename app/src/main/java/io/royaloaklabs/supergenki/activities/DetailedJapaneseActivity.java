@@ -2,9 +2,12 @@ package io.royaloaklabs.supergenki.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -44,6 +47,22 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
     adView              = findViewById(R.id.adBanner1);
     AdRequest adRequest = new AdRequest.Builder().build();
     adView.loadAd(adRequest);
+
+    adView.setAdListener(new AdListener() {
+      @Override
+      public void onAdLoaded() {
+        Log.i("onAdLoaded", "Ad successfully Loaded");
+        CardView adCardView = findViewById(R.id.adCardView);
+        adCardView.setVisibility(View.VISIBLE);
+      }
+
+      @Override
+      public void onAdFailedToLoad(int errorCode) {
+        Log.i("onAdFailedToLoad", "Ad failed to load");
+        CardView adCardView = findViewById(R.id.adCardView);
+        adCardView.setVisibility(View.GONE);
+      }
+    });
 
     Intent intent = getIntent();
     entryId = intent.getLongExtra(ENT_SEQ, 0);

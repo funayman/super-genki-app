@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
   private RecyclerView recyclerView;
   private DictionaryViewAdapter dictionaryViewAdapter;
   private RecyclerView.LayoutManager layoutManager;
-
   private DictionaryAdapter dictionaryAdapter;
 
   @Override
