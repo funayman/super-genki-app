@@ -19,8 +19,7 @@ public class DictionaryHelper extends SQLiteOpenHelper {
   public DictionaryHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
     this.context = context;
-    DATABASE_PATH = String.format("%s/%s", context.getFilesDir().getAbsolutePath(), DATABASE_NAME);
-
+    DATABASE_PATH = this.context.getDatabasePath(DATABASE_NAME).getPath();
     if(this.hasNoDatabase()) {
       try {
         this.copyInternalDatabase();
@@ -28,7 +27,6 @@ public class DictionaryHelper extends SQLiteOpenHelper {
         e.printStackTrace();
       }
     }
-
     // TODO is this even needed after copy?
     database = (database == null)
         ? SQLiteDatabase.openDatabase(DATABASE_PATH, null, SQLiteDatabase.OPEN_READONLY)
@@ -52,12 +50,23 @@ public class DictionaryHelper extends SQLiteOpenHelper {
 
   private boolean hasNoDatabase() {
     File db = this.context.getDatabasePath(DATABASE_NAME);
-    return db.exists();
+    if(db.length() == 0) {
+      return true;
+    }
+    return false;
   }
 
   private void copyInternalDatabase() throws IOException {
+    File databaseFile = this.context.getDatabasePath(DATABASE_NAME);
+
+    if (!databaseFile.exists()) {
+      if(!databaseFile.getParentFile().exists()) {
+        databaseFile.getParentFile().mkdir();
+      }
+    }
+
     InputStream is = this.context.getAssets().open(DATABASE_NAME);
-    OutputStream os = new FileOutputStream(DATABASE_PATH);
+    OutputStream os = new FileOutputStream(databaseFile);
 
     byte[] buffer = new byte[1028];
     int length;
