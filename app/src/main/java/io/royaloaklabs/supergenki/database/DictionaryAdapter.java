@@ -21,9 +21,11 @@ public class DictionaryAdapter {
       Entry.ENTRY_TABLE_NAME
   );
 
-  private static final String GET_BY_ID_SQL = String.format("SELECT %s, %s, %s, %s, %s FROM %s WHERE %s=?",
+  private static final String GET_BY_ID_SQL = String.format(
+      "SELECT %s, %s, %s, %s, %s FROM %s WHERE %s=?",
       Entry.ID_COL_NAME, Entry.JAPANESE_COL_NAME, Entry.FURIGANA_COL_NAME, Entry.ENGLISH_COL_NAME,
-      Entry.ROMAJI_COL_NAME, Entry.ENTRY_TABLE_NAME, Entry.ID_COL_NAME);
+      Entry.ROMAJI_COL_NAME, Entry.ENTRY_TABLE_NAME, Entry.ID_COL_NAME
+  );
 
   private static final String QUERY_SQL = String.format(
       "SELECT %s, %s, %s, %s, %s, %s FROM %s WHERE %s MATCH ? ORDER BY %s DESC",
@@ -59,10 +61,10 @@ public class DictionaryAdapter {
     return entryList;
   }
 
-  public Entry getOne(Long id) {
+  public SearchResult getOne(Long id) {
     SQLiteDatabase db = dictionaryHelper.getReadableDatabase();
-    // Cursor cursor = db.rawQuery(GET_BY_ID_SQL, new String[]{id.toString()});
-    return new Entry.Builder().setId(1518450).build();
+    Cursor cursor = db.rawQuery(GET_BY_ID_SQL, new String[]{id.toString()});
+    return this.buildListFromCursor(cursor).remove(0);
   }
 
   private List<SearchResult> buildListFromCursor(Cursor cursor) {
