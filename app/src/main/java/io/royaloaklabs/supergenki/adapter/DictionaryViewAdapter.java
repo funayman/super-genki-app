@@ -10,14 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import io.royaloaklabs.supergenki.R;
 import io.royaloaklabs.supergenki.activities.DetailedJapaneseActivity;
 import io.royaloaklabs.supergenki.domain.Entry;
+import io.royaloaklabs.supergenki.domain.SearchResult;
 
 import java.util.List;
 
 public class DictionaryViewAdapter extends RecyclerView.Adapter<DictionaryViewAdapter.ViewHolder> {
 
-  private List<Entry> entries;
+  private List<SearchResult> entries;
 
-  public DictionaryViewAdapter(List<Entry> entries) {
+  public DictionaryViewAdapter(List<SearchResult> entries) {
     this.entries = entries;
   }
 
@@ -30,16 +31,11 @@ public class DictionaryViewAdapter extends RecyclerView.Adapter<DictionaryViewAd
 
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-    Entry entry = this.entries.get(position);
+    SearchResult entry = this.entries.get(position);
 
-    if(entry.getKanji().isEmpty()) {
-      holder.kanjiText.setText(entry.getKana());
-      holder.kanaText.setText(R.string.EMPTY);
-    } else {
-      holder.kanjiText.setText(entry.getKanji());
-      holder.kanaText.setText(entry.getKana());
-    }
-    holder.englishText.setText(entry.getSensesAsString());
+    holder.kanjiText.setText(entry.getJapanese());
+    holder.kanaText.setText(entry.getFurigana());
+    holder.englishText.setText(entry.getEnglish());
   }
 
   @Override
@@ -47,8 +43,8 @@ public class DictionaryViewAdapter extends RecyclerView.Adapter<DictionaryViewAd
     return entries.size();
   }
 
-  public void updateEntries(List<Entry> mEntryList) {
-    this.entries = mEntryList;
+  public void updateEntries(List<SearchResult> results) {
+    this.entries = results;
     this.notifyDataSetChanged();
   }
 
@@ -67,7 +63,7 @@ public class DictionaryViewAdapter extends RecyclerView.Adapter<DictionaryViewAd
       itemView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          Entry entry = entries.get(getAdapterPosition());
+          SearchResult entry = entries.get(getAdapterPosition());
           Intent intent = new Intent(v.getContext(), DetailedJapaneseActivity.class);
           intent.putExtra(DetailedJapaneseActivity.ENT_SEQ, entry.getId());
           v.getContext().startActivity(intent);

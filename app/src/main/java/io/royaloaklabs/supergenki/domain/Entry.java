@@ -13,10 +13,11 @@ public class Entry {
   // DB Constants
   public static final String ENTRY_TABLE_NAME = "einihongo";
   public static final String ID_COL_NAME = "docid";
-  public static final String KANJI_COL_NAME = "kanji";
-  public static final String KANA_COL_NAME = "kana";
-  public static final String ENGLISH_COL_NAME = "gloss";
-  public static final String ROMAJI_COL_NAME = "romaji";
+  public static final String JAPANESE_COL_NAME = "japanese";
+  public static final String FURIGANA_COL_NAME = "furigana";
+  public static final String ENGLISH_COL_NAME = "english";
+  public static final String ROMAJI_COL_NAME = "romanji";
+  public static final String FREQUENCY_COL_NAME = "freq";
 
   private long id;
 
@@ -30,9 +31,9 @@ public class Entry {
 
   private String romaji;
 
-  private Entry() { } // empty constructor
+  protected Entry() { } // empty constructor
 
-  private Entry(Builder builder) {
+  protected Entry(Builder builder) {
     this.id = builder.id;
     this.kanji = builder.kanji;
     this.kanjiAlt = builder.kanjiAlt;
