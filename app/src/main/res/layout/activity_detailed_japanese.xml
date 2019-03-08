@@ -36,7 +36,7 @@
                             android:layout_height="match_parent"
                             android:padding="20dp">
 
-                        <sh.drt.furiganaview.FuriganaView
+                        <sh.drt.supergenkiutil.furiganaview.FuriganaView
                                 android:id="@+id/japaneseTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
