@@ -35,8 +35,6 @@ public class DictionaryAdapter {
   );
 
 
-      // "SELECT pos,gloss,japanese,furigana,altkanji,altkana FROM definitions AS d INNER JOIN readings AS r ON d.id = r.id WHERE d.id = ?";
-
   private static final String QUERY_SQL = String.format(
       "SELECT %s, %s, %s, %s, %s, %s FROM %s WHERE %s MATCH ? ORDER BY %s DESC",
       DictionaryEntry.ID_COL_NAME,
