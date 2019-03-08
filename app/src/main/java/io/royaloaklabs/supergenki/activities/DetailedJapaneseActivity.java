@@ -14,8 +14,8 @@ import com.google.android.gms.ads.MobileAds;
 import io.royaloaklabs.supergenki.R;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.DictionaryEntry;
-import io.royaloaklabs.supergenki.domain.SearchResult;
 import io.royaloaklabs.supergenki.domain.Sense;
+import sh.drt.furiganaview.FuriganaView;
 
 import java.util.List;
 
@@ -23,10 +23,10 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
 
   public static final String ENT_SEQ = "entry-sequence";
 
-  private TextView japaneseText;
+  private TextView englishTitleView;
   private TextView englishText;
-  private TextView kanaText;
   private TextView romajiText;
+  private FuriganaView furiganaView;
 
   private DictionaryAdapter dictionaryAdapter;
   private DictionaryEntry entry;
@@ -45,7 +45,7 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
 
     //Enable Ads
     MobileAds.initialize(this, "ca-app-pub-8769234461659052~4596379422");
-    adView              = findViewById(R.id.adBanner1);
+    adView = findViewById(R.id.adBanner1);
     AdRequest adRequest = new AdRequest.Builder().build();
     adView.loadAd(adRequest);
 
@@ -68,10 +68,10 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
     Intent intent = getIntent();
     entryId = intent.getLongExtra(ENT_SEQ, 0);
 
-    japaneseText = findViewById(R.id.detailedJapaneseText);
-    kanaText = findViewById(R.id.detailedKanaView);
     romajiText = findViewById(R.id.detailedRomajiView);
     englishText = findViewById(R.id.detailedTranslationView);
+    furiganaView = findViewById(R.id.japaneseTextView);
+    englishTitleView = findViewById(R.id.detailedEnglishText);
 
     dictionaryAdapter = new DictionaryAdapter(this);
   }
@@ -83,9 +83,10 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
 
     entry = dictionaryAdapter.getOne(entryId);
 
-    japaneseText.setText(entry.getJapanese());
-    kanaText.setText(entry.getFurigana());
+    String japaneseText = (entry.getFurigana().isEmpty()) ? entry.getJapanese() : String.format("{%s;%s}", entry.getJapanese(), entry.getFurigana());
+    furiganaView.setText(japaneseText);
     romajiText.setText(entry.getRomaji());
+
 
     // add to other card view
     List<Sense> senses = entry.getSenses();
