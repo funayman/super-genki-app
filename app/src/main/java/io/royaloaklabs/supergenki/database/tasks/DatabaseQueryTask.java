@@ -3,7 +3,6 @@ package io.royaloaklabs.supergenki.database.tasks;
 import android.os.AsyncTask;
 import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
-import io.royaloaklabs.supergenki.domain.Entry;
 import io.royaloaklabs.supergenki.domain.SearchResult;
 
 import java.util.List;

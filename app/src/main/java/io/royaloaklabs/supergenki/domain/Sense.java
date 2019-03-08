@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Sense {
+  public static final String GLOSS_DELIMITER = ";;";
 
   private String partOfSpeech;
 
@@ -17,11 +18,11 @@ public class Sense {
   }
 
   public Sense(String unsplitString) {
-    this(unsplitString.split(Entry.GLOSS_DELIMITER));
+    this(unsplitString.split(GLOSS_DELIMITER));
   }
 
   public static List<Sense> buildFromRawData(String query) {
-    String[] senseArray = query.split(Entry.SENSE_DELIMITER);
+    String[] senseArray = query.split(DictionaryEntry.SENSE_DELIMITER);
     List<Sense> senseList = new ArrayList<>(senseArray.length);
     for(String sense : senseArray) {
       senseList.add(new Sense(sense));

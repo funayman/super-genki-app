@@ -13,7 +13,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import io.royaloaklabs.supergenki.R;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
-import io.royaloaklabs.supergenki.domain.Entry;
+import io.royaloaklabs.supergenki.domain.DictionaryEntry;
 import io.royaloaklabs.supergenki.domain.SearchResult;
 import io.royaloaklabs.supergenki.domain.Sense;
 
@@ -29,7 +29,7 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
   private TextView romajiText;
 
   private DictionaryAdapter dictionaryAdapter;
-  private SearchResult entry;
+  private DictionaryEntry entry;
 
   private Long entryId;
   private AdView adView;
@@ -88,7 +88,6 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
     romajiText.setText(entry.getRomaji());
 
     // add to other card view
-    /*
     List<Sense> senses = entry.getSenses();
     if(senses.size() == 1) {
       englishText.setText(senses.get(0).toJoinedString());
@@ -105,9 +104,7 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
       }
       englishText.setText(sb.toString());
     }
-    */
 
-    englishText.setText(entry.getEnglish().replaceAll(";", "\n\n"));
   }
 
   @Override

@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import io.royaloaklabs.supergenki.R;
 import io.royaloaklabs.supergenki.activities.DetailedJapaneseActivity;
-import io.royaloaklabs.supergenki.domain.Entry;
 import io.royaloaklabs.supergenki.domain.SearchResult;
 
 import java.util.List;
