@@ -14,7 +14,6 @@ import com.google.android.gms.ads.MobileAds;
 import io.royaloaklabs.supergenki.R;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.DictionaryEntry;
-import io.royaloaklabs.supergenki.domain.SearchResult;
 import io.royaloaklabs.supergenki.domain.Sense;
 
 import java.util.List;
@@ -45,7 +44,7 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
 
     //Enable Ads
     MobileAds.initialize(this, "ca-app-pub-8769234461659052~4596379422");
-    adView              = findViewById(R.id.adBanner1);
+    adView = findViewById(R.id.adBanner1);
     AdRequest adRequest = new AdRequest.Builder().build();
     adView.loadAd(adRequest);
 

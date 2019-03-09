@@ -23,13 +23,14 @@ public class DictionaryAdapter {
   );
 
   private static final String GET_BY_ID_SQL = String.format(
-      "SELECT %s,%s,%s,%s,%s,%s FROM %s AS d INNER JOIN %s AS r ON d.id = r.id WHERE d.id = ?",
+      "SELECT %s,%s,%s,%s,%s,%s, %s FROM %s AS d INNER JOIN %s AS r ON d.id = r.id WHERE d.id = ?",
       DictionaryEntry.PART_OF_SPEECH_COL_NAME,
       DictionaryEntry.GLOSS_COL_NAME,
       DictionaryEntry.JAPANESE_COL_NAME,
       DictionaryEntry.FURIGANA_COL_NAME,
       DictionaryEntry.ALTKANJI_COL_NAME,
       DictionaryEntry.ALTKANA_COL_NAME,
+      DictionaryEntry.ROMAJI_COL_NAME,
       DictionaryEntry.DEFINITION_TABLE_NAME,
       DictionaryEntry.READING_TABLE_NAME
   );
@@ -79,6 +80,7 @@ public class DictionaryAdapter {
       entry.setFurigana(cursor.getString(cursor.getColumnIndex(DictionaryEntry.FURIGANA_COL_NAME)));
       entry.setAltKanji(cursor.getString(cursor.getColumnIndex(DictionaryEntry.ALTKANJI_COL_NAME)));
       entry.setAltKana(cursor.getString(cursor.getColumnIndex(DictionaryEntry.ALTKANA_COL_NAME)));
+      entry.setRomaji(cursor.getString(cursor.getColumnIndex(DictionaryEntry.ROMAJI_COL_NAME)));
 
       String senseData = cursor.getString(cursor.getColumnIndex(DictionaryEntry.GLOSS_COL_NAME));
       entry.getSenses().add(new Sense(senseData));
