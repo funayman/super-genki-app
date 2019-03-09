@@ -16,7 +16,7 @@ public class DictionaryEntry {
   public static final String JAPANESE_COL_NAME = "japanese";
   public static final String FURIGANA_COL_NAME = "furigana";
   public static final String ENGLISH_COL_NAME = "english";
-  public static final String ROMAJI_COL_NAME = "romanji";
+  public static final String ROMAJI_COL_NAME = "romaji";
   public static final String FREQUENCY_COL_NAME = "freq";
 
   public static final String ALTKANJI_COL_NAME = "altkanji";
