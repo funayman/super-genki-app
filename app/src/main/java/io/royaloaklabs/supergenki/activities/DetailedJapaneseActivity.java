@@ -15,6 +15,7 @@ import io.royaloaklabs.supergenki.R;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.DictionaryEntry;
 import io.royaloaklabs.supergenki.domain.Sense;
+import sh.drt.supergenkiutil.furiganaview.FuriganaView;
 
 import java.util.List;
 
@@ -22,9 +23,9 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
 
   public static final String ENT_SEQ = "entry-sequence";
 
-  private TextView japaneseText;
+
+  private FuriganaView furiganaView;
   private TextView englishText;
-  private TextView kanaText;
   private TextView romajiText;
 
   private DictionaryAdapter dictionaryAdapter;
@@ -67,10 +68,9 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
     Intent intent = getIntent();
     entryId = intent.getLongExtra(ENT_SEQ, 0);
 
-    japaneseText = findViewById(R.id.detailedJapaneseText);
-    kanaText = findViewById(R.id.detailedKanaView);
     romajiText = findViewById(R.id.detailedRomajiView);
     englishText = findViewById(R.id.detailedTranslationView);
+    furiganaView = findViewById(R.id.japaneseTextView);
 
     dictionaryAdapter = new DictionaryAdapter(this);
   }
@@ -82,9 +82,11 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
 
     entry = dictionaryAdapter.getOne(entryId);
 
-    japaneseText.setText(entry.getJapanese());
-    kanaText.setText(entry.getFurigana());
+    String japaneseText = (entry.getFurigana().isEmpty()) ? entry.getJapanese() : String.format("{%s;%s}", entry.getJapanese(), entry.getFurigana());
+    furiganaView.setText(japaneseText);
+
     romajiText.setText(entry.getRomaji());
+
 
     // add to other card view
     List<Sense> senses = entry.getSenses();

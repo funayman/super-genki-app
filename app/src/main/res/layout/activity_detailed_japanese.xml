@@ -29,33 +29,20 @@
                         android:layout_height="match_parent"
                         android:padding="20dp">
 
-                    <TextView
-                            android:id="@+id/detailedJapaneseText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:gravity="center"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textSize="36sp"
-                            android:textStyle="bold"
-                            android:typeface="serif"
-                            app:fontFamily="sans-serif-condensed-medium"/>
-
-                    <TextView
-                            android:id="@+id/detailedKanaView"
+                    <sh.drt.supergenkiutil.furiganaview.FuriganaView
+                            android:id="@+id/japaneseTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/detailedJapaneseText"
-                            android:gravity="left"
-                            android:textSize="18sp"/>
-
+                            app:baseTextSize="36dp"
+                            app:furiganaColor="@color/colorPrimaryDark"
+                            app:baseColor="@color/colorPrimaryDark"/>
                     <TextView
                             android:id="@+id/detailedRomajiText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="5sp"
                             android:text="@string/romaji"
-                            android:layout_below="@id/detailedKanaView"/>
+                            android:layout_below="@id/japaneseTextView"/>
 
                     <TextView
                             android:id="@+id/detailedRomajiView"
