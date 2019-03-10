@@ -35,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch(item.getItemId()) {
       case android.R.id.home:
-        drawerLayout.openDrawer(GravityCompat.START);
+        if(drawerLayout.isDrawerVisible(GravityCompat.START)) {
+          drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+          drawerLayout.openDrawer(GravityCompat.START);
+        }
         return true;
       default:
         // If we got here, the user's action was not recognized.
