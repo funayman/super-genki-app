@@ -10,10 +10,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.navigation.NavigationView;
 import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.database.tasks.DatabaseQueryTask;
@@ -23,15 +28,15 @@ public class MainActivity extends AppCompatActivity {
   private DictionaryViewAdapter dictionaryViewAdapter;
   private RecyclerView.LayoutManager layoutManager;
   private DictionaryAdapter dictionaryAdapter;
+  private DrawerLayout drawerLayout;
+  private ActionBarDrawerToggle drawerToggle;
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch(item.getItemId()) {
-      case R.id.nav_about:
-        // User chose the "About" item, show the app settings UI...
-        showAboutDialog();
+      case android.R.id.home:
+        drawerLayout.openDrawer(GravityCompat.START);
         return true;
-
       default:
         // If we got here, the user's action was not recognized.
         // Invoke the superclass to handle it.
@@ -104,6 +109,30 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    drawerLayout = findViewById(R.id.drawer_layout);
+    NavigationView navigationView = findViewById(R.id.navigation_view);
+    navigationView.setNavigationItemSelectedListener(
+        new NavigationView.OnNavigationItemSelectedListener() {
+          @Override
+          public boolean onNavigationItemSelected(MenuItem menuItem) {
+            // set item as selected to persist highlight
+            menuItem.setChecked(true);
+            // close drawer when item is tapped
+            drawerLayout.closeDrawers();
+
+            switch(menuItem.getItemId()) {
+              case R.id.menu_about:
+                // User chose the "About" item, show the app settings UI...
+                showAboutDialog();
+            }
+            return true;
+          }
+        });
+
+    ActionBar actionbar = getSupportActionBar();
+    actionbar.setDisplayHomeAsUpEnabled(true);
+    actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
     dictionaryAdapter = new DictionaryAdapter(getApplicationContext());
 
