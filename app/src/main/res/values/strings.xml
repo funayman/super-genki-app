@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">Super Genki!</string>
-    <string name="app_launcher_label">Super Genki: Japanese Companion</string>
+    <string name="app_launcher_label">Super Genki - Japanese Dictionary</string>
+    <string name="navigation_header_title">Super Genki</string>
+    <string name="navigation_header_subtitle">Japanese Dictionary</string>
     <string name="title_about">About</string>
     <string name="title_search">Search</string>
-
+    <string name="menu_lists">Lists</string>
     <string name="about_dialog_title">About Super Genki</string>
     <string name="about_dialog_text"><![CDATA[
         <p>
