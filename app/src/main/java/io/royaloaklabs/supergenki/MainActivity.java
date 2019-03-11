@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.navigation, menu);
+    inflater.inflate(R.menu.search_navigation, menu);
 
     final MenuItem searchMenuItem = menu.findItem(R.id.search);
     final SearchView searchView = (SearchView) searchMenuItem.getActionView();
