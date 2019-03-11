@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
     final MenuItem searchMenuItem = menu.findItem(R.id.search);
     final SearchView searchView = (SearchView) searchMenuItem.getActionView();
+    searchView.setMaxWidth(Integer.MAX_VALUE); // fill up the remainder of the action bar
 
     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
       DatabaseQueryTask task = null;
