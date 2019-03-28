@@ -35,4 +35,5 @@
     <!-- Detailed View -->
     <string name="romaji">Romaji</string>
     <string name="english">English</string>
+    <string name="title_activity_favorite_view">FavoriteView</string>
 </resources>
