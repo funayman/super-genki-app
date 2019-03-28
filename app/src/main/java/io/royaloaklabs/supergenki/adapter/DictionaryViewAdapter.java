@@ -42,11 +42,6 @@ public class DictionaryViewAdapter extends RecyclerView.Adapter<DictionaryViewAd
     return entries.size();
   }
 
-  public void updateEntries(List<SearchResult> results) {
-    this.entries = results;
-    this.notifyDataSetChanged();
-  }
-
   public class ViewHolder extends RecyclerView.ViewHolder {
     TextView kanjiText;
     TextView kanaText;

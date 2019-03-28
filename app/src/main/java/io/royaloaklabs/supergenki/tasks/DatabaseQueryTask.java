@@ -1,4 +1,4 @@
-package io.royaloaklabs.supergenki.database.tasks;
+package io.royaloaklabs.supergenki.tasks;
 
 import android.os.AsyncTask;
 import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
@@ -9,11 +9,20 @@ import java.util.List;
 
 public class DatabaseQueryTask extends AsyncTask<String, Void, List<SearchResult>> {
   private DictionaryAdapter dictionaryAdapter;
-  private DictionaryViewAdapter dictionaryViewAdapter;
+  private UiUpdater updater;
 
-  public DatabaseQueryTask(DictionaryAdapter dictionaryAdapter, DictionaryViewAdapter dictionaryViewAdapter) {
+  public void setUpdater(UiUpdater updater) {
+    this.updater = updater;
+  }
+
+  public void setDictionaryAdapter(DictionaryAdapter dictionaryAdapter) {
     this.dictionaryAdapter = dictionaryAdapter;
-    this.dictionaryViewAdapter = dictionaryViewAdapter;
+  }
+
+  public DatabaseQueryTask() { }
+
+  public DatabaseQueryTask(DictionaryAdapter dictionaryAdapter) {
+    this.dictionaryAdapter = dictionaryAdapter;
   }
 
   @Override
@@ -24,6 +33,11 @@ public class DatabaseQueryTask extends AsyncTask<String, Void, List<SearchResult
   @Override
   protected void onPostExecute(List<SearchResult> entries) {
     super.onPostExecute(entries);
-    dictionaryViewAdapter.updateEntries(entries);
+    updater.onTaskSuccess(entries);
   }
+
+  public interface UiUpdater {
+    void onTaskSuccess(List<SearchResult> searchResults);
+  }
+
 }

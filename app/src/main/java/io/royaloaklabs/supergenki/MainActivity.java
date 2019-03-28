@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,7 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
 import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
-import io.royaloaklabs.supergenki.database.tasks.DatabaseQueryTask;
+import io.royaloaklabs.supergenki.domain.SearchResult;
+import io.royaloaklabs.supergenki.tasks.DatabaseQueryTask;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
   private RecyclerView recyclerView;
@@ -30,6 +34,14 @@ public class MainActivity extends AppCompatActivity {
   private DictionaryAdapter dictionaryAdapter;
   private DrawerLayout drawerLayout;
   private ActionBarDrawerToggle drawerToggle;
+
+  private DatabaseQueryTask.UiUpdater searchResultUiUpdater = new DatabaseQueryTask.UiUpdater() {
+    @Override
+    public void onTaskSuccess(List<SearchResult> searchResults) {
+      dictionaryViewAdapter = new DictionaryViewAdapter(searchResults);
+      recyclerView.setAdapter(dictionaryViewAdapter);
+    }
+  };
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -78,12 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
       @Override
       public boolean onQueryTextSubmit(String q) {
-        if(task != null) {
-          task.cancel(Boolean.TRUE);
-          task = null;
-        }
-        task = new DatabaseQueryTask(dictionaryAdapter, dictionaryViewAdapter);
-        task.execute(q);
         return false;
       }
 
@@ -93,8 +99,11 @@ public class MainActivity extends AppCompatActivity {
           task.cancel(Boolean.TRUE);
           task = null;
         }
-        task = new DatabaseQueryTask(dictionaryAdapter, dictionaryViewAdapter);
+
+        task = new DatabaseQueryTask(dictionaryAdapter);
+        task.setUpdater(searchResultUiUpdater);
         task.execute(q);
+
         return Boolean.TRUE;
       }
     });
@@ -103,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
     searchView.setOnCloseListener(new SearchView.OnCloseListener() {
       @Override
       public boolean onClose() {
-        dictionaryViewAdapter.updateEntries(dictionaryAdapter.getRandomData());
+        dictionaryViewAdapter = new DictionaryViewAdapter(dictionaryAdapter.getRandomData());
+        recyclerView.setAdapter(dictionaryViewAdapter);
         return false;
       }
     });
