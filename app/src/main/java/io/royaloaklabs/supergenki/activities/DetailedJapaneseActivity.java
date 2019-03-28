@@ -11,6 +11,8 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import io.royaloaklabs.supergenki.R;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.DictionaryEntry;
@@ -73,6 +75,15 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
     furiganaView = findViewById(R.id.japaneseTextView);
 
     dictionaryAdapter = new DictionaryAdapter(this);
+
+    FloatingActionButton fab = findViewById(R.id.addRemoveFavorite);
+    fab.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Snackbar.make(view, "Added (or Removed) from favorites", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+      }
+    });
+
   }
 
   @Override
@@ -119,4 +130,6 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
     finish();
     return true;
   }
+
+
 }
