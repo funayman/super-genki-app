@@ -16,13 +16,13 @@ public class Favorite {
   @ColumnInfo(name = "dateAdded")
   private Long dateAdded;
 
-  public Favorite(Long entryId) {
+  public Favorite(Long entryId, Long dateAdded) {
     this.entryId = entryId;
     this.dateAdded = System.currentTimeMillis() / 1000L;
   }
 
   @NonNull
-  public Long getId() {
+  public Long getEntryId() {
     return entryId;
   }
 

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase;
 import io.royaloaklabs.supergenki.dao.FavoriteDao;
 import io.royaloaklabs.supergenki.domain.Favorite;
 
-@Database(entities = {Favorite.class}, version = 1)
+@Database(entities = {Favorite.class}, version = 1, exportSchema = false)
 public abstract class FavoriteDatabase extends RoomDatabase {
   public abstract FavoriteDao favoriteDao();
 
