@@ -1,5 +1,6 @@
 package io.royaloaklabs.supergenki;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -20,6 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
+import io.royaloaklabs.supergenki.activities.FavoriteView;
 import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.SearchResult;
@@ -140,6 +142,9 @@ public class MainActivity extends AppCompatActivity {
               case R.id.menu_about:
                 // User chose the "About" item, show the app settings UI...
                 showAboutDialog();
+              case R.id.menu_favorites:
+                Intent i = new Intent(getApplicationContext(), FavoriteView.class);
+                startActivity(i);
             }
             return true;
           }
