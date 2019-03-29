@@ -21,13 +21,9 @@ public class FavoriteViewModel extends AndroidViewModel {
 
   public void delete(Favorite favorite) { this.favoriteRepository.delete(favorite); }
 
-  public LiveData<List<Favorite>> getAll() {
-    return favoriteList;
-  }
+  public LiveData<List<Favorite>> getAll() { return favoriteList; }
 
   public Favorite getOne(Long id) { return this.favoriteRepository.getOne(id); }
 
-  public void insert(Favorite favorite) {
-    favoriteRepository.insert(favorite);
-  }
+  public void insert(Favorite favorite) { favoriteRepository.insert(favorite); }
 }

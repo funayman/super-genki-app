@@ -47,11 +47,6 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
     this.favoriteList = Collections.emptyList();
   }
 
-  public FavoriteViewAdapter(Context context, List<Favorite> favorites) {
-    this.inflater = LayoutInflater.from(context);
-    this.favoriteList = favorites;
-  }
-
   public void setFavoriteList(List<Favorite> favoriteList) {
     this.favoriteList = favoriteList;
     notifyDataSetChanged();

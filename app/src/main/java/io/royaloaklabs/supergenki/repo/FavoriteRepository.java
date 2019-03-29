@@ -19,22 +19,16 @@ public class FavoriteRepository {
     favoriteList = favoriteDao.getAll();
   }
 
-  public LiveData<List<Favorite>> getAll() {
-    return this.favoriteList;
-  }
+  public LiveData<List<Favorite>> getAll() { return this.favoriteList; }
 
   public Favorite getOne(Long id) { return this.favoriteDao.getOne(id); }
 
-  public void insert(Favorite favorite) {
-    new insertAsyncTask(favoriteDao).execute(favorite);
-  }
+  public void insert(Favorite favorite) { new insertAsyncTask(favoriteDao).execute(favorite); }
 
   private class insertAsyncTask extends AsyncTask<Favorite, Void, Void> {
     FavoriteDao favoriteDao;
 
-    public insertAsyncTask(FavoriteDao favoriteDao) {
-      this.favoriteDao = favoriteDao;
-    }
+    public insertAsyncTask(FavoriteDao favoriteDao) { this.favoriteDao = favoriteDao; }
 
     @Override
     protected Void doInBackground(Favorite... favorites) {
@@ -43,5 +37,7 @@ public class FavoriteRepository {
     }
   }
 
-  public void delete(Favorite favorite) { this.favoriteDao.delete(favorite); }
+  public void delete(Favorite favorite) {
+    this.favoriteDao.delete(favorite);
+  }
 }
