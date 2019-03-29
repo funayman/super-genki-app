@@ -170,8 +170,6 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
           this.entry.getSensesAsString(),
           System.currentTimeMillis() / 1000L);
 
-      Log.v("DRT", this.entry.getSensesAsString());
-
       favoriteViewModel.insert(favorite);
     }
 
