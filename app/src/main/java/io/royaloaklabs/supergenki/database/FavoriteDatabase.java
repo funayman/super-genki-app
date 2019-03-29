@@ -17,7 +17,7 @@ public abstract class FavoriteDatabase extends RoomDatabase {
     if(INSTANCE == null) {
       synchronized(FavoriteDatabase.class) {
         if(INSTANCE == null) {
-          INSTANCE = Room.databaseBuilder(context.getApplicationContext(), FavoriteDatabase.class, "favorite_database").build();
+          INSTANCE = Room.databaseBuilder(context.getApplicationContext(), FavoriteDatabase.class, "favorite_database").allowMainThreadQueries().build();
         }
       }
     }

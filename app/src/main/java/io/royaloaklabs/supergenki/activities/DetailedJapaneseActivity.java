@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProviders;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -16,7 +17,9 @@ import com.google.android.material.snackbar.Snackbar;
 import io.royaloaklabs.supergenki.R;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.DictionaryEntry;
+import io.royaloaklabs.supergenki.domain.Favorite;
 import io.royaloaklabs.supergenki.domain.Sense;
+import io.royaloaklabs.supergenki.view.FavoriteViewModel;
 import sh.drt.supergenkiutil.furiganaview.FuriganaView;
 
 import java.util.List;
@@ -25,16 +28,19 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
 
   public static final String ENT_SEQ = "entry-sequence";
 
-
-  private FuriganaView furiganaView;
   private TextView englishText;
   private TextView romajiText;
-
+  private FuriganaView furiganaView;
+  private FavoriteViewModel favoriteViewModel;
   private DictionaryAdapter dictionaryAdapter;
   private DictionaryEntry entry;
 
+  private FloatingActionButton fab;
   private Long entryId;
   private AdView adView;
+
+  private boolean isFavorite;
+  private Favorite favorite;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +82,8 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
 
     dictionaryAdapter = new DictionaryAdapter(this);
 
-    FloatingActionButton fab = findViewById(R.id.addRemoveFavorite);
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Snackbar.make(view, "Added (or Removed) from favorites", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-      }
-    });
+    fab = findViewById(R.id.addRemoveFavorite);
+    fab.setOnClickListener(favoriteButtonOnClickListener);
 
   }
 
@@ -117,6 +118,10 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
       englishText.setText(sb.toString());
     }
 
+    favoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
+    favorite = favoriteViewModel.getOne(entryId);
+    isFavorite = (favorite != null);
+    updateFabResource();
   }
 
   @Override
@@ -131,5 +136,41 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
     return true;
   }
 
+  private View.OnClickListener favoriteButtonOnClickListener = new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+      String msg = isFavorite ? "Removed from Favorites" : "Added to Favorites";
+      Snackbar snackbar = Snackbar.make(v, msg, Snackbar.LENGTH_LONG);
+      snackbar.setAction("UNDO", undoActionListener);
 
+      updateFavorites();
+      updateFabResource();
+
+      snackbar.show();
+    }
+  };
+
+  private View.OnClickListener undoActionListener = new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+      updateFavorites();
+      updateFabResource();
+    }
+  };
+
+  private void updateFavorites() {
+    if(isFavorite) {
+      favoriteViewModel.delete(favorite);
+      favorite = null;
+    } else {
+      favorite = new Favorite(entryId, System.currentTimeMillis() / 1000L);
+      favoriteViewModel.insert(favorite);
+    }
+
+    isFavorite = !isFavorite;
+  }
+
+  private void updateFabResource() {
+    fab.setImageResource((isFavorite) ? R.drawable.ic_star_black_24dp : R.drawable.ic_star_border_black_24dp);
+  }
 }

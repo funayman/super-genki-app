@@ -22,10 +22,11 @@ public class FavoriteRepository {
     return this.favoriteList;
   }
 
+  public Favorite getOne(Long id) { return this.favoriteDao.getOne(id); }
+
   public void insert(Favorite favorite) {
     new insertAsyncTask(favoriteDao).execute(favorite);
   }
-
 
   private class insertAsyncTask extends AsyncTask<Favorite, Void, Void> {
     FavoriteDao favoriteDao;
@@ -40,4 +41,6 @@ public class FavoriteRepository {
       return null;
     }
   }
+
+  public void delete(Favorite favorite) { this.favoriteDao.delete(favorite); }
 }

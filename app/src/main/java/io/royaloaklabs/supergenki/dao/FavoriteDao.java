@@ -19,6 +19,9 @@ public interface FavoriteDao {
   @Delete
   void delete(Favorite favorite);
 
+  @Query("SELECT * FROM favorite_table WHERE entryId = :id")
+  Favorite getOne(Long id);
+
   @Query("SELECT * FROM favorite_table ORDER BY dateAdded DESC")
   List<Favorite> getAll();
 }
