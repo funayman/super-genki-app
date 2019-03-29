@@ -31,7 +31,7 @@
     <string name="no">No</string>
     <string name="close">Close</string>
     <string name="undo">UNDO</string>
-    <string name="add_fav">Removed from Favorites</string>
+    <string name="add_fav">Added to Favorites</string>
     <string name="remove_fav">Removed from Favorites</string>
     <string name="remove_jp_fav">Removed %1$s from Favorites</string>
     <string name="EMPTY"/>
