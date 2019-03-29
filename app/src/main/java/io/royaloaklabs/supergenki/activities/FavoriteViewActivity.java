@@ -61,9 +61,9 @@ public class FavoriteViewActivity extends AppCompatActivity {
 
         Snackbar snackbar = Snackbar.make(
             findViewById(android.R.id.content),
-            String.format("Removed %s from Favorites", favorite.getJapanese()),
+            getString(R.string.remove_jp_fav, favorite.getJapanese()),
             Snackbar.LENGTH_LONG);
-        snackbar.setAction("UNDO", new View.OnClickListener() {
+        snackbar.setAction(R.string.undo, new View.OnClickListener() {
           @Override
           public void onClick(View v) {
             favoriteViewModel.insert(favorite);

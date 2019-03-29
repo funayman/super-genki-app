@@ -139,9 +139,9 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
   private View.OnClickListener favoriteButtonOnClickListener = new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-      String msg = isFavorite ? "Removed from Favorites" : "Added to Favorites";
-      Snackbar snackbar = Snackbar.make(v, msg, Snackbar.LENGTH_LONG);
-      snackbar.setAction("UNDO", undoActionListener);
+      Snackbar snackbar = Snackbar.make(v,
+          isFavorite ? getString(R.string.remove_fav) : getString(R.string.add_fav), Snackbar.LENGTH_LONG);
+      snackbar.setAction(R.string.undo, undoActionListener);
 
       updateFavorites();
       updateFabResource();
@@ -168,7 +168,7 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
           this.entry.getJapanese(),
           this.entry.getFurigana(),
           this.entry.getSensesAsString(),
-          System.currentTimeMillis()/1000L);
+          System.currentTimeMillis() / 1000L);
 
       favoriteViewModel.insert(favorite);
     }
