@@ -1,6 +1,7 @@
 package io.royaloaklabs.supergenki.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import io.royaloaklabs.supergenki.R;
+import io.royaloaklabs.supergenki.activities.DetailedJapaneseActivity;
 import io.royaloaklabs.supergenki.domain.Favorite;
 import sh.drt.supergenkiutil.furiganaview.FuriganaView;
 
@@ -23,6 +25,17 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
       super(itemView);
       favEnglishTextView = (TextView) itemView.findViewById(R.id.favEnglishTextView);
       favFuriganaView = (FuriganaView) itemView.findViewById(R.id.favJapaneseTextView);
+
+      itemView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Favorite favorite = favoriteList.get(getAdapterPosition());
+
+          Intent intent = new Intent(v.getContext(), DetailedJapaneseActivity.class);
+          intent.putExtra(DetailedJapaneseActivity.ENT_SEQ, favorite.getEntryId());
+          v.getContext().startActivity(intent);
+        }
+      });
     }
   }
 
@@ -37,6 +50,25 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
   public FavoriteViewAdapter(Context context, List<Favorite> favorites) {
     this.inflater = LayoutInflater.from(context);
     this.favoriteList = favorites;
+  }
+
+  public void setFavoriteList(List<Favorite> favoriteList) {
+    this.favoriteList = favoriteList;
+    notifyDataSetChanged();
+  }
+
+  public Favorite getFavoriteFromList(int position) {
+    return this.favoriteList.get(position);
+  }
+
+  public void removeFavoriteFromList(int position) {
+    this.favoriteList.remove(position);
+    notifyItemRemoved(position);
+  }
+
+  public void restoreItem(int position, Favorite favorite) {
+    this.favoriteList.add(position, favorite);
+    notifyItemInserted(position);
   }
 
   @NonNull

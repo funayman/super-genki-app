@@ -1,5 +1,6 @@
 package io.royaloaklabs.supergenki.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -23,5 +24,5 @@ public interface FavoriteDao {
   Favorite getOne(Long id);
 
   @Query("SELECT * FROM favorite_table ORDER BY dateAdded DESC")
-  List<Favorite> getAll();
+  LiveData<List<Favorite>> getAll();
 }

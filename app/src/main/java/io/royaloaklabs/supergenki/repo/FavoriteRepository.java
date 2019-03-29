@@ -2,6 +2,7 @@ package io.royaloaklabs.supergenki.repo;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import androidx.lifecycle.LiveData;
 import io.royaloaklabs.supergenki.dao.FavoriteDao;
 import io.royaloaklabs.supergenki.database.FavoriteDatabase;
 import io.royaloaklabs.supergenki.domain.Favorite;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class FavoriteRepository {
   private FavoriteDao favoriteDao;
-  private List<Favorite> favoriteList;
+  private LiveData<List<Favorite>> favoriteList;
 
   public FavoriteRepository(Application application) {
     FavoriteDatabase db = FavoriteDatabase.getDatabase(application);
@@ -18,7 +19,7 @@ public class FavoriteRepository {
     favoriteList = favoriteDao.getAll();
   }
 
-  public List<Favorite> getAll() {
+  public LiveData<List<Favorite>> getAll() {
     return this.favoriteList;
   }
 

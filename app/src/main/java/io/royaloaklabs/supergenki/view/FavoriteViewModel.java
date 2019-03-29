@@ -3,6 +3,7 @@ package io.royaloaklabs.supergenki.view;
 import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import io.royaloaklabs.supergenki.domain.Favorite;
 import io.royaloaklabs.supergenki.repo.FavoriteRepository;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class FavoriteViewModel extends AndroidViewModel {
   private FavoriteRepository favoriteRepository;
-  private List<Favorite> favoriteList;
+  private LiveData<List<Favorite>> favoriteList;
 
   public FavoriteViewModel(@NonNull Application application) {
     super(application);
@@ -20,7 +21,7 @@ public class FavoriteViewModel extends AndroidViewModel {
 
   public void delete(Favorite favorite) { this.favoriteRepository.delete(favorite); }
 
-  public List<Favorite> getAll() {
+  public LiveData<List<Favorite>> getAll() {
     return favoriteList;
   }
 
