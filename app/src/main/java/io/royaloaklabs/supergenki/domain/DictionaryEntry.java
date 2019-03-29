@@ -116,7 +116,7 @@ public class DictionaryEntry {
     sb.append(this.senses.get(0).toJoinedString());
     for(int i = 1; i < this.senses.size(); i++) {
       sb.append("; ");
-      sb.append(this.senses.get(i));
+      sb.append(this.senses.get(i).toJoinedString());
     }
     return sb.toString();
   }

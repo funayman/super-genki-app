@@ -28,6 +28,9 @@ public class FavoriteViewActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayShowHomeEnabled(true);
+
     setContentView(R.layout.activity_favorite_view);
 
     recyclerView = findViewById(R.id.favoriteRecyclerView);
@@ -47,6 +50,12 @@ public class FavoriteViewActivity extends AppCompatActivity {
 
     new ItemTouchHelper(callback).attachToRecyclerView(recyclerView);
 
+  }
+
+  @Override
+  public boolean onSupportNavigateUp() {
+    finish();
+    return true;
   }
 
   private SwipeToDeleteCallback makeCallback() {

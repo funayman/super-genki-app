@@ -25,6 +25,7 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
       super(itemView);
       favEnglishTextView = (TextView) itemView.findViewById(R.id.favEnglishTextView);
       favFuriganaView = (FuriganaView) itemView.findViewById(R.id.favJapaneseTextView);
+      favFuriganaView.setBaseTextSize(favFuriganaView.getBaseTextSize()*0.8F);
 
       itemView.setOnClickListener(new View.OnClickListener() {
         @Override
