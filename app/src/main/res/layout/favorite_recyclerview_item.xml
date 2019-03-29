@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical" android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
-    <TextView
-            android:id="@+id/favoriteTextView"
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"
-            android:background="@android:color/holo_orange_light"/>
+            android:layout_height="match_parent"
+            android:padding="20dp">
+
+        <sh.drt.supergenkiutil.furiganaview.FuriganaView
+                android:id="@+id/favJapaneseTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:baseTextSize="36dp"
+                app:furiganaColor="@color/colorPrimaryDark"
+                app:baseColor="@color/colorPrimaryDark"/>
+        <TextView
+                android:id="@+id/favEnglishTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5sp"
+                android:layout_below="@id/favJapaneseTextView"/>
+
+    </RelativeLayout>
 </LinearLayout>

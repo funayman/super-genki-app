@@ -9,17 +9,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import io.royaloaklabs.supergenki.R;
 import io.royaloaklabs.supergenki.domain.Favorite;
+import sh.drt.supergenkiutil.furiganaview.FuriganaView;
 
 import java.util.Collections;
 import java.util.List;
 
 public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapter.FavoriteViewHolder> {
   class FavoriteViewHolder extends RecyclerView.ViewHolder {
-    private final TextView idView;
+    private final TextView favEnglishTextView;
+    private final FuriganaView favFuriganaView;
 
     public FavoriteViewHolder(@NonNull View itemView) {
       super(itemView);
-      idView = (TextView) itemView.findViewById(R.id.favoriteTextView);
+      favEnglishTextView = (TextView) itemView.findViewById(R.id.favEnglishTextView);
+      favFuriganaView = (FuriganaView) itemView.findViewById(R.id.favJapaneseTextView);
     }
   }
 
@@ -46,7 +49,10 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
   @Override
   public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
     Favorite f = favoriteList.get(position);
-    holder.idView.setText(f.getEntryId().toString());
+    holder.favEnglishTextView.setText(f.getEnglish());
+
+    String japaneseText = (f.getFurigana().isEmpty()) ? f.getJapanese() : String.format("{%s;%s}", f.getJapanese(), f.getFurigana());
+    holder.favFuriganaView.setText(japaneseText);
   }
 
   @Override

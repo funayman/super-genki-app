@@ -12,7 +12,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".activities.FavoriteView"
+                android:name=".activities.FavoriteViewActivity"
                 android:label="@string/title_activity_favorite_view">
         </activity>
 

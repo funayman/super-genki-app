@@ -163,7 +163,13 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
       favoriteViewModel.delete(favorite);
       favorite = null;
     } else {
-      favorite = new Favorite(entryId, System.currentTimeMillis() / 1000L);
+      favorite = new Favorite(
+          this.entryId,
+          this.entry.getJapanese(),
+          this.entry.getFurigana(),
+          this.entry.getSensesAsString(),
+          System.currentTimeMillis()/1000L);
+
       favoriteViewModel.insert(favorite);
     }
 

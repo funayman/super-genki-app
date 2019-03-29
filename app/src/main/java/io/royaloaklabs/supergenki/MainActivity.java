@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,7 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
-import io.royaloaklabs.supergenki.activities.FavoriteView;
+import io.royaloaklabs.supergenki.activities.FavoriteViewActivity;
 import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.SearchResult;
@@ -142,9 +141,11 @@ public class MainActivity extends AppCompatActivity {
               case R.id.menu_about:
                 // User chose the "About" item, show the app settings UI...
                 showAboutDialog();
+                break;
               case R.id.menu_favorites:
-                Intent i = new Intent(getApplicationContext(), FavoriteView.class);
+                Intent i = new Intent(getApplicationContext(), FavoriteViewActivity.class);
                 startActivity(i);
+                break;
             }
             return true;
           }
