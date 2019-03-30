@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.DetailedJapaneseActivity"> </activity>
+        <activity android:name=".activities.SearchActivity"> </activity>
     </application>
 
 </manifest>

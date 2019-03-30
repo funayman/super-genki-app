@@ -1,30 +1,41 @@
 package io.royaloaklabs.supergenki;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.SearchView;
 import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.navigation.NavigationView;
+import io.royaloaklabs.supergenki.activities.SearchActivity;
 import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
+import io.royaloaklabs.supergenki.domain.DictionaryEntry;
 import io.royaloaklabs.supergenki.domain.SearchResult;
-import io.royaloaklabs.supergenki.tasks.DatabaseQueryTask;
+import io.royaloaklabs.supergenki.domain.Sense;
+import sh.drt.supergenkiutil.furiganaview.FuriganaView;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,31 +45,8 @@ public class MainActivity extends AppCompatActivity {
   private DictionaryAdapter dictionaryAdapter;
   private DrawerLayout drawerLayout;
   private ActionBarDrawerToggle drawerToggle;
-
-  private DatabaseQueryTask.UiUpdater searchResultUiUpdater = new DatabaseQueryTask.UiUpdater() {
-    @Override
-    public void onTaskSuccess(List<SearchResult> searchResults) {
-      dictionaryViewAdapter = new DictionaryViewAdapter(searchResults);
-      recyclerView.setAdapter(dictionaryViewAdapter);
-    }
-  };
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch(item.getItemId()) {
-      case android.R.id.home:
-        if(drawerLayout.isDrawerVisible(GravityCompat.START)) {
-          drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-          drawerLayout.openDrawer(GravityCompat.START);
-        }
-        return true;
-      default:
-        // If we got here, the user's action was not recognized.
-        // Invoke the superclass to handle it.
-        return super.onOptionsItemSelected(item);
-    }
-  }
+  private AdView adView;
+  private Intent searchActivity;
 
   private void showAboutDialog() {
     AlertDialog.Builder adb = new AlertDialog.Builder(this);
@@ -77,47 +65,21 @@ public class MainActivity extends AppCompatActivity {
     adb.create().show();
   }
 
-  public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.search_navigation, menu);
-
-    final MenuItem searchMenuItem = menu.findItem(R.id.search);
-    final SearchView searchView = (SearchView) searchMenuItem.getActionView();
-    searchView.setMaxWidth(Integer.MAX_VALUE); // fill up the remainder of the action bar
-
-    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-      DatabaseQueryTask task = null;
-
-      @Override
-      public boolean onQueryTextSubmit(String q) {
-        return false;
-      }
-
-      @Override
-      public boolean onQueryTextChange(String q) {
-        if(task != null) {
-          task.cancel(Boolean.TRUE);
-          task = null;
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch(item.getItemId()) {
+      case android.R.id.home:
+        if(drawerLayout.isDrawerVisible(GravityCompat.START)) {
+          drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+          drawerLayout.openDrawer(GravityCompat.START);
         }
-
-        task = new DatabaseQueryTask(dictionaryAdapter);
-        task.setUpdater(searchResultUiUpdater);
-        task.execute(q);
-
-        return Boolean.TRUE;
-      }
-    });
-
-    // repopulate the ListView with random entries when the user closes the search bar
-    searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-      @Override
-      public boolean onClose() {
-        dictionaryViewAdapter = new DictionaryViewAdapter(dictionaryAdapter.getRandomData());
-        recyclerView.setAdapter(dictionaryViewAdapter);
-        return false;
-      }
-    });
-    return true;
+        return true;
+      default:
+        // If we got here, the user's action was not recognized.
+        // Invoke the superclass to handle it.
+        return super.onOptionsItemSelected(item);
+    }
   }
 
   @Override
@@ -125,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    searchActivity = new Intent(getApplicationContext(), SearchActivity.class);
     drawerLayout = findViewById(R.id.drawer_layout);
     NavigationView navigationView = findViewById(R.id.navigation_view);
     navigationView.setNavigationItemSelectedListener(
@@ -140,6 +103,10 @@ public class MainActivity extends AppCompatActivity {
               case R.id.menu_about:
                 // User chose the "About" item, show the app settings UI...
                 showAboutDialog();
+                break;
+              case R.id.menu_search:
+                startActivity(searchActivity);
+                break;
             }
             return true;
           }
@@ -151,15 +118,77 @@ public class MainActivity extends AppCompatActivity {
 
     dictionaryAdapter = new DictionaryAdapter(getApplicationContext());
 
-    recyclerView = (RecyclerView) findViewById(R.id.rv);
-    recyclerView.setHasFixedSize(true);
-
     // use a linear layout manager
     layoutManager = new LinearLayoutManager(this);
-    recyclerView.setLayoutManager(layoutManager);
 
+    //Enable Ads
+    MobileAds.initialize(this, "ca-app-pub-8769234461659052~4596379422");
+    adView = findViewById(R.id.adBanner1);
+    AdRequest adRequest = new AdRequest.Builder().build();
+    adView.loadAd(adRequest);
 
-    dictionaryViewAdapter = new DictionaryViewAdapter(dictionaryAdapter.getRandomData());
-    recyclerView.setAdapter(dictionaryViewAdapter);
+    adView.setAdListener(new AdListener() {
+      @Override
+      public void onAdLoaded() {
+        Log.i("onAdLoaded", "Ad successfully Loaded");
+        CardView adCardView = findViewById(R.id.adCardView);
+        adCardView.setVisibility(View.VISIBLE);
+      }
+
+      @Override
+      public void onAdFailedToLoad(int errorCode) {
+        Log.i("onAdFailedToLoad", "Ad failed to load");
+        CardView adCardView = findViewById(R.id.adCardView);
+        adCardView.setVisibility(View.GONE);
+      }
+    });
+
+    SearchResult wordOfTheDay = dictionaryAdapter.getOneSearchResultById(getDailyIndex());
+    DictionaryEntry entry = dictionaryAdapter.getOne(wordOfTheDay.getId());
+
+    TextView romajiText   = findViewById(R.id.detailedRomajiView);
+    TextView englishText  = findViewById(R.id.detailedTranslationView);
+    FuriganaView furiganaView = findViewById(R.id.japaneseTextView);
+
+    String japaneseText = (entry.getFurigana().isEmpty()) ? entry.getJapanese() : String.format("{%s;%s}", entry.getJapanese(), entry.getFurigana());
+    furiganaView.setText(japaneseText);
+
+    romajiText.setText(entry.getRomaji());
+
+    // add to other card view
+    List<Sense> senses = entry.getSenses();
+    if(senses.size() == 1) {
+      englishText.setText(senses.get(0).toJoinedString());
+    } else if(senses.size() == 2) {
+      englishText.setText(String.format("1) %s\n2) %s\n",
+          senses.get(0).toJoinedString(), senses.get(1).toJoinedString()));
+    } else if(senses.size() == 3) {
+      englishText.setText(String.format("1) %s\n2) %s\n3) %s\n",
+          senses.get(0).toJoinedString(), senses.get(1).toJoinedString(), senses.get(2).toJoinedString()));
+    } else {
+      StringBuilder sb = new StringBuilder();
+      for(int i = 0; i < senses.size(); i++) {
+        sb.append(String.format("%d) %s\n", i + 1, entry.getSenses().get(i).toJoinedString()));
+      }
+      englishText.setText(sb.toString());
+    }
+  }
+
+  private Long getDailyIndex() {
+    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    String stringDate     = dateFormat.format(new Date());
+    BigInteger tableHashResult = BigInteger.valueOf(0L);
+
+    try {
+      MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+      messageDigest.update(stringDate.getBytes(), 0, stringDate.length());
+      BigInteger md5Base10 = new BigInteger(1, messageDigest.digest());
+      tableHashResult = md5Base10.mod(BigInteger.valueOf(dictionaryAdapter.getEntryTableCount()));
+    } catch (Exception e) {
+      e.printStackTrace();
+      //Return a static number if for some reason the MD5 failed. (Maybe make this random #?)
+      return 10L;
+    }
+    return tableHashResult.longValue();
   }
 }
