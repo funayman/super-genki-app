@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_home"
           android:title="@string/title_home"
-          android:icon="@drawable/ic_home_black_24dp"
-    />
+          android:icon="@drawable/ic_home_black_24dp" />
     <item android:id="@+id/menu_search"
           android:title="@string/title_search"
-          android:icon="@android:drawable/ic_menu_search"
-    />
+          android:icon="@android:drawable/ic_menu_search" />
+    <item android:id="@+id/menu_favorites"
+          android:title="Favorites"
+          android:icon="@drawable/ic_star_border_black_24dp" />
     <item android:id="@+id/menu_about"
           android:title="@string/title_about"
-          android:icon="@drawable/ic_baseline_info_24px"
-    />
+          android:icon="@drawable/ic_baseline_info_24px" />
 </menu>

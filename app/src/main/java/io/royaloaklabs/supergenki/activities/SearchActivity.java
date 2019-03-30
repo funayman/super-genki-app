@@ -1,6 +1,7 @@
 package io.royaloaklabs.supergenki.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -102,6 +103,10 @@ public class SearchActivity extends AppCompatActivity {
               case R.id.menu_about:
                 showAboutDialog();
               break;
+              case R.id.menu_favorites:
+                Intent i = new Intent(getApplicationContext(), FavoriteViewActivity.class);
+                startActivity(i);
+                break;
               case R.id.menu_home:
                   finish();
                 break;

@@ -32,9 +32,14 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="close">Close</string>
+    <string name="undo">UNDO</string>
+    <string name="add_fav">Added to Favorites</string>
+    <string name="remove_fav">Removed from Favorites</string>
+    <string name="remove_jp_fav">Removed %1$s from Favorites</string>
     <string name="EMPTY"/>
 
     <!-- Detailed View -->
     <string name="romaji">Romaji</string>
     <string name="english">English</string>
+    <string name="title_activity_favorite_view">FavoriteView</string>
 </resources>

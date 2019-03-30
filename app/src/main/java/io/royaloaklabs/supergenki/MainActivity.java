@@ -23,6 +23,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.navigation.NavigationView;
+import io.royaloaklabs.supergenki.activities.FavoriteViewActivity;
 import io.royaloaklabs.supergenki.activities.SearchActivity;
 import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
@@ -104,6 +105,10 @@ public class MainActivity extends AppCompatActivity {
                 // User chose the "About" item, show the app settings UI...
                 showAboutDialog();
                 break;
+              case R.id.menu_favorites:
+                Intent i = new Intent(getApplicationContext(), FavoriteViewActivity.class);
+                startActivity(i);
+                break;
               case R.id.menu_search:
                 startActivity(searchActivity);
                 break;
@@ -146,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
     SearchResult wordOfTheDay = dictionaryAdapter.getOneSearchResultById(getDailyIndex());
     DictionaryEntry entry = dictionaryAdapter.getOne(wordOfTheDay.getId());
 
-    TextView romajiText   = findViewById(R.id.detailedRomajiView);
-    TextView englishText  = findViewById(R.id.detailedTranslationView);
+    TextView romajiText = findViewById(R.id.detailedRomajiView);
+    TextView englishText = findViewById(R.id.detailedTranslationView);
     FuriganaView furiganaView = findViewById(R.id.japaneseTextView);
 
     String japaneseText = (entry.getFurigana().isEmpty()) ? entry.getJapanese() : String.format("{%s;%s}", entry.getJapanese(), entry.getFurigana());
@@ -176,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
 
   private Long getDailyIndex() {
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-    String stringDate     = dateFormat.format(new Date());
+    String stringDate = dateFormat.format(new Date());
     BigInteger tableHashResult = BigInteger.valueOf(0L);
 
     try {
@@ -184,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
       messageDigest.update(stringDate.getBytes(), 0, stringDate.length());
       BigInteger md5Base10 = new BigInteger(1, messageDigest.digest());
       tableHashResult = md5Base10.mod(BigInteger.valueOf(dictionaryAdapter.getEntryTableCount()));
-    } catch (Exception e) {
+    } catch(Exception e) {
       e.printStackTrace();
       //Return a static number if for some reason the MD5 failed. (Maybe make this random #?)
       return 10L;
