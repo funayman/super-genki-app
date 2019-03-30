@@ -16,10 +16,6 @@
                 android:label="@string/title_activity_favorite_view">
         </activity>
 
-        <meta-data
-                android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value="ca-app-pub-8769234461659052~4596379422"/>
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
