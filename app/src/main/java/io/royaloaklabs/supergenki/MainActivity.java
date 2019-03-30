@@ -18,10 +18,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.navigation.NavigationView;
 import io.royaloaklabs.supergenki.activities.FavoriteViewActivity;
 import io.royaloaklabs.supergenki.activities.SearchActivity;
@@ -46,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
   private DictionaryAdapter dictionaryAdapter;
   private DrawerLayout drawerLayout;
   private ActionBarDrawerToggle drawerToggle;
-  private AdView adView;
   private Intent searchActivity;
 
   private void showAboutDialog() {
@@ -125,28 +120,6 @@ public class MainActivity extends AppCompatActivity {
 
     // use a linear layout manager
     layoutManager = new LinearLayoutManager(this);
-
-    //Enable Ads
-    MobileAds.initialize(this, "ca-app-pub-8769234461659052~4596379422");
-    adView = findViewById(R.id.adBanner1);
-    AdRequest adRequest = new AdRequest.Builder().build();
-    adView.loadAd(adRequest);
-
-    adView.setAdListener(new AdListener() {
-      @Override
-      public void onAdLoaded() {
-        Log.i("onAdLoaded", "Ad successfully Loaded");
-        CardView adCardView = findViewById(R.id.adCardView);
-        adCardView.setVisibility(View.VISIBLE);
-      }
-
-      @Override
-      public void onAdFailedToLoad(int errorCode) {
-        Log.i("onAdFailedToLoad", "Ad failed to load");
-        CardView adCardView = findViewById(R.id.adCardView);
-        adCardView.setVisibility(View.GONE);
-      }
-    });
 
     SearchResult wordOfTheDay = dictionaryAdapter.getOneSearchResultById(getDailyIndex());
     DictionaryEntry entry = dictionaryAdapter.getOne(wordOfTheDay.getId());

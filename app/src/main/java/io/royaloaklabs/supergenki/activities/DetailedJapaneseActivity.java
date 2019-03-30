@@ -2,16 +2,10 @@ package io.royaloaklabs.supergenki.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProviders;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import io.royaloaklabs.supergenki.R;
@@ -37,7 +31,6 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
 
   private FloatingActionButton fab;
   private Long entryId;
-  private AdView adView;
 
   private boolean isFavorite;
   private Favorite favorite;
@@ -50,28 +43,6 @@ public class DetailedJapaneseActivity extends AppCompatActivity {
     getSupportActionBar().setDisplayShowHomeEnabled(true);
 
     setContentView(R.layout.activity_detailed_japanese);
-
-    //Enable Ads
-    MobileAds.initialize(this, "ca-app-pub-8769234461659052~4596379422");
-    adView = findViewById(R.id.adBanner1);
-    AdRequest adRequest = new AdRequest.Builder().build();
-    adView.loadAd(adRequest);
-
-    adView.setAdListener(new AdListener() {
-      @Override
-      public void onAdLoaded() {
-        Log.i("onAdLoaded", "Ad successfully Loaded");
-        CardView adCardView = findViewById(R.id.adCardView);
-        adCardView.setVisibility(View.VISIBLE);
-      }
-
-      @Override
-      public void onAdFailedToLoad(int errorCode) {
-        Log.i("onAdFailedToLoad", "Ad failed to load");
-        CardView adCardView = findViewById(R.id.adCardView);
-        adCardView.setVisibility(View.GONE);
-      }
-    });
 
     Intent intent = getIntent();
     entryId = intent.getLongExtra(ENT_SEQ, 0);

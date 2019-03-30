@@ -21,7 +21,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.gms.ads.AdView;
 import com.google.android.material.navigation.NavigationView;
 import io.royaloaklabs.supergenki.R;
 import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
@@ -39,7 +38,6 @@ public class SearchActivity extends AppCompatActivity {
   private DictionaryAdapter dictionaryAdapter;
   private DrawerLayout drawerLayout;
   private ActionBarDrawerToggle drawerToggle;
-  private AdView adView;
 
   private DatabaseQueryTask.UiUpdater searchResultUiUpdater = new DatabaseQueryTask.UiUpdater() {
     @Override
@@ -102,13 +100,13 @@ public class SearchActivity extends AppCompatActivity {
             switch(menuItem.getItemId()) {
               case R.id.menu_about:
                 showAboutDialog();
-              break;
+                break;
               case R.id.menu_favorites:
                 Intent i = new Intent(getApplicationContext(), FavoriteViewActivity.class);
                 startActivity(i);
                 break;
               case R.id.menu_home:
-                  finish();
+                finish();
                 break;
             }
             return true;
