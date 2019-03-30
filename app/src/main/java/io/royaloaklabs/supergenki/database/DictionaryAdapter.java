@@ -2,6 +2,7 @@ package io.royaloaklabs.supergenki.database;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import io.royaloaklabs.supergenki.domain.DictionaryEntry;
 import io.royaloaklabs.supergenki.domain.SearchResult;
@@ -11,6 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DictionaryAdapter {
+  private static final String GET_ONE_RECORD_BY_ID_SQL = String.format(
+      "SELECT %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
+      DictionaryEntry.ID_COL_NAME,
+      DictionaryEntry.JAPANESE_COL_NAME,
+      DictionaryEntry.FURIGANA_COL_NAME,
+      DictionaryEntry.ENGLISH_COL_NAME,
+      DictionaryEntry.ROMAJI_COL_NAME,
+      DictionaryEntry.FREQUENCY_COL_NAME,
+      DictionaryEntry.ENTRY_TABLE_NAME,
+      DictionaryEntry.ID_COL_NAME
+  );
+
   private static final String RANDOM_DATA_SQL = String.format(
       "SELECT %s, %s, %s, %s, %s, %s FROM %s ORDER BY RANDOM() LIMIT 20",
       DictionaryEntry.ID_COL_NAME,
@@ -55,6 +68,12 @@ public class DictionaryAdapter {
     this.dictionaryHelper = new DictionaryHelper(context);
   }
 
+  public Long getEntryTableCount() {
+    SQLiteDatabase db = dictionaryHelper.getReadableDatabase();
+    long count = DatabaseUtils.queryNumEntries(db, DictionaryEntry.ENTRY_TABLE_NAME);
+    return count;
+  }
+
   public List<SearchResult> Search(String q) {
     SQLiteDatabase db = dictionaryHelper.getReadableDatabase();
     Cursor cursor = db.rawQuery(QUERY_SQL, new String[]{q + "*"});
@@ -62,6 +81,13 @@ public class DictionaryAdapter {
     return entryList;
   }
 
+  public SearchResult getOneSearchResultById(Long id) {
+    Long translatedId = (id * 10) + 1000000;
+    SQLiteDatabase db = dictionaryHelper.getReadableDatabase();
+    Cursor cursor = db.rawQuery(GET_ONE_RECORD_BY_ID_SQL, new String[]{translatedId.toString()});
+    List<SearchResult> entryList = this.buildListFromCursor(cursor);
+    return entryList.get(0);
+  }
 
   public List<SearchResult> getRandomData() {
     SQLiteDatabase db = dictionaryHelper.getReadableDatabase();
