@@ -1,5 +1,6 @@
 package io.royaloaklabs.supergenki.activities;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
@@ -26,7 +28,7 @@ import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.SearchResult;
 import io.royaloaklabs.supergenki.tasks.DatabaseQueryTask;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
@@ -120,14 +122,7 @@ public class SearchActivity extends AppCompatActivity {
     layoutManager = new LinearLayoutManager(this);
     recyclerView.setLayoutManager(layoutManager);
 
-    //initial text
-    SearchResult initialText = new SearchResult();
-    initialText.setJapanese("Use the Search Bar to Start!");
-    initialText.setId(-1);
-    ArrayList initialTextArray = new ArrayList();
-    initialTextArray.add(initialText);
-
-    dictionaryViewAdapter = new DictionaryViewAdapter(initialTextArray);
+    dictionaryViewAdapter = new DictionaryViewAdapter(Collections.EMPTY_LIST);
 
     recyclerView.setAdapter(dictionaryViewAdapter);
   }
@@ -138,6 +133,15 @@ public class SearchActivity extends AppCompatActivity {
 
     final MenuItem searchMenuItem = menu.findItem(R.id.search);
     final SearchView searchView = (SearchView) searchMenuItem.getActionView();
+
+    // Bring search bar to users attention
+    searchView.setMaxWidth(Integer.MAX_VALUE); // fill up the remainder of the action bar
+    searchView.setIconifiedByDefault(false);
+    searchView.requestFocus();
+
+    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+    imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
+
     searchView.setMaxWidth(Integer.MAX_VALUE); // fill up the remainder of the action bar
 
     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

@@ -58,11 +58,9 @@ public class DictionaryViewAdapter extends RecyclerView.Adapter<DictionaryViewAd
         @Override
         public void onClick(View v) {
           SearchResult entry = entries.get(getAdapterPosition());
-          if(entry.getId() != -1) {
-            Intent intent = new Intent(v.getContext(), DetailedJapaneseActivity.class);
-            intent.putExtra(DetailedJapaneseActivity.ENT_SEQ, entry.getId());
-            v.getContext().startActivity(intent);
-          }
+          Intent intent = new Intent(v.getContext(), DetailedJapaneseActivity.class);
+          intent.putExtra(DetailedJapaneseActivity.ENT_SEQ, entry.getId());
+          v.getContext().startActivity(intent);
         }
       });
     }
