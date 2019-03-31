@@ -32,10 +32,6 @@ public class DictionaryHelper extends SQLiteOpenHelper {
     } else {
       this.getWritableDatabase();
     }
-    // TODO is this even needed after copy?
-    database = (database == null)
-        ? SQLiteDatabase.openDatabase(DATABASE_PATH, null, SQLiteDatabase.OPEN_READONLY)
-        : database;
   }
 
   @Override
@@ -55,11 +51,6 @@ public class DictionaryHelper extends SQLiteOpenHelper {
     } catch(IOException e) {
       Log.e(TAG, "IOException in onUpgrade", e);
     }
-  }
-
-  @Override
-  public SQLiteDatabase getReadableDatabase() throws SQLException {
-    return database;
   }
 
   private boolean hasNoDatabase() {
