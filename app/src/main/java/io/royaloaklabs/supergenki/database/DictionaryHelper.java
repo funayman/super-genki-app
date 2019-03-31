@@ -10,7 +10,7 @@ import java.io.*;
 public class DictionaryHelper extends SQLiteOpenHelper {
   private static final String TAG = DictionaryHelper.class.getSimpleName();
   private static final String DATABASE_NAME = "jisho-main.db";
-  private static final int DATABASE_VERSION = 5;
+  private static final int DATABASE_VERSION = 2;
 
   private final Context context;
 
