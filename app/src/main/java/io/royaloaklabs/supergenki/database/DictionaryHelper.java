@@ -9,6 +9,7 @@ import android.util.Log;
 import java.io.*;
 
 public class DictionaryHelper extends SQLiteOpenHelper {
+  private static final String TAG = DictionaryHelper.class.getSimpleName();
   private static final String DATABASE_NAME = "jisho-main.db";
   private static final int DATABASE_VERSION = 2;
   private final String DATABASE_PATH;
@@ -21,12 +22,12 @@ public class DictionaryHelper extends SQLiteOpenHelper {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
     this.context = context;
     DATABASE_PATH = this.context.getDatabasePath(DATABASE_NAME).getPath();
-    Log.i("DictionaryHelper", "Loading DB");
+    Log.d(TAG, "Loading DB");
     if(this.hasNoDatabase()) {
       try {
         this.copyInternalDatabase();
       } catch(IOException e) {
-        e.printStackTrace();
+        Log.e(TAG, "IOException in Constructor", e);
       }
     } else {
       this.getWritableDatabase();
@@ -45,14 +46,14 @@ public class DictionaryHelper extends SQLiteOpenHelper {
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     try {
-      Log.i("onUpgrade", "Upgrading SQL Database");
+      Log.d(TAG, "Upgrading SQL Database");
       File databaseFile = this.context.getDatabasePath(DATABASE_NAME);
       if (databaseFile.exists()) {
         databaseFile.delete();
       }
       this.copyInternalDatabase();
     } catch(IOException e) {
-      e.printStackTrace();
+      Log.e(TAG, "IOException in onUpgrade", e);
     }
   }
 
