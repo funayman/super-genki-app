@@ -1,7 +1,6 @@
 package io.royaloaklabs.supergenki.database;
 
 import android.content.Context;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -12,16 +11,12 @@ public class DictionaryHelper extends SQLiteOpenHelper {
   private static final String TAG = DictionaryHelper.class.getSimpleName();
   private static final String DATABASE_NAME = "jisho-main.db";
   private static final int DATABASE_VERSION = 2;
-  private final String DATABASE_PATH;
-
-  private SQLiteDatabase database;
 
   private final Context context;
 
   public DictionaryHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
     this.context = context;
-    DATABASE_PATH = this.context.getDatabasePath(DATABASE_NAME).getPath();
     Log.d(TAG, "Loading DB");
     if(this.hasNoDatabase()) {
       try {
@@ -44,7 +39,7 @@ public class DictionaryHelper extends SQLiteOpenHelper {
     try {
       Log.d(TAG, "Upgrading SQL Database");
       File databaseFile = this.context.getDatabasePath(DATABASE_NAME);
-      if (databaseFile.exists()) {
+      if(databaseFile.exists()) {
         databaseFile.delete();
       }
       this.copyInternalDatabase();
@@ -64,7 +59,7 @@ public class DictionaryHelper extends SQLiteOpenHelper {
   private void copyInternalDatabase() throws IOException {
     File databaseFile = this.context.getDatabasePath(DATABASE_NAME);
 
-    if (!databaseFile.exists()) {
+    if(!databaseFile.exists()) {
       if(!databaseFile.getParentFile().exists()) {
         databaseFile.getParentFile().mkdir();
       }
