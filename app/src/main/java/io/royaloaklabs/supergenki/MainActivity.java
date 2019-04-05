@@ -5,20 +5,27 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.material.navigation.NavigationView;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.material.navigation.NavigationView;
 import io.royaloaklabs.supergenki.activities.FavoriteViewActivity;
 import io.royaloaklabs.supergenki.activities.SearchActivity;
 import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
@@ -27,13 +34,6 @@ import io.royaloaklabs.supergenki.domain.DictionaryEntry;
 import io.royaloaklabs.supergenki.domain.SearchResult;
 import io.royaloaklabs.supergenki.domain.Sense;
 import sh.drt.supergenkiutil.furiganaview.FuriganaView;
-
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
   private RecyclerView recyclerView;
@@ -121,7 +121,13 @@ public class MainActivity extends AppCompatActivity {
     // use a linear layout manager
     layoutManager = new LinearLayoutManager(this);
 
-    SearchResult wordOfTheDay = dictionaryAdapter.getOneSearchResultById(getDailyIndex());
+    SearchResult wordOfTheDay;
+
+    try {
+      wordOfTheDay = dictionaryAdapter.getOneSearchResultById(getDailyIndex());
+    } catch (Exception e) {
+      wordOfTheDay = dictionaryAdapter.getOneSearchResultById(50L);
+    }
     DictionaryEntry entry = dictionaryAdapter.getOne(wordOfTheDay.getId());
 
     TextView romajiText = findViewById(R.id.detailedRomajiView);
