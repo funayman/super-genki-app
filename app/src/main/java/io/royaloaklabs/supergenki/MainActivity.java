@@ -138,24 +138,7 @@ public class MainActivity extends AppCompatActivity {
     furiganaView.setText(japaneseText);
 
     romajiText.setText(entry.getRomaji());
-
-    // add to other card view
-    List<Sense> senses = entry.getSenses();
-    if(senses.size() == 1) {
-      englishText.setText(senses.get(0).toJoinedString());
-    } else if(senses.size() == 2) {
-      englishText.setText(String.format("1) %s\n2) %s\n",
-          senses.get(0).toJoinedString(), senses.get(1).toJoinedString()));
-    } else if(senses.size() == 3) {
-      englishText.setText(String.format("1) %s\n2) %s\n3) %s\n",
-          senses.get(0).toJoinedString(), senses.get(1).toJoinedString(), senses.get(2).toJoinedString()));
-    } else {
-      StringBuilder sb = new StringBuilder();
-      for(int i = 0; i < senses.size(); i++) {
-        sb.append(String.format("%d) %s\n", i + 1, entry.getSenses().get(i).toJoinedString()));
-      }
-      englishText.setText(sb.toString());
-    }
+    englishText.setText(wordOfTheDay.getEnglish());
   }
 
   private Long getDailyIndex() {
