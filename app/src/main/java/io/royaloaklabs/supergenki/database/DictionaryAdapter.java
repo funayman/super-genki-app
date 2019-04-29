@@ -82,9 +82,8 @@ public class DictionaryAdapter {
   }
 
   public SearchResult getOneSearchResultById(Long id) {
-    Long translatedId = (id * 10) + 1000000;
     SQLiteDatabase db = dictionaryHelper.getReadableDatabase();
-    Cursor cursor = db.rawQuery(GET_ONE_RECORD_BY_ID_SQL, new String[]{translatedId.toString()});
+    Cursor cursor = db.rawQuery(GET_ONE_RECORD_BY_ID_SQL, new String[]{id.toString()});
     List<SearchResult> entryList = this.buildListFromCursor(cursor);
     return entryList.get(0);
   }

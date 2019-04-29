@@ -8,16 +8,6 @@ import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
-import com.google.android.material.navigation.NavigationView;
-
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -26,6 +16,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.navigation.NavigationView;
 import io.royaloaklabs.supergenki.activities.FavoriteViewActivity;
 import io.royaloaklabs.supergenki.activities.SearchActivity;
 import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
@@ -34,6 +25,14 @@ import io.royaloaklabs.supergenki.domain.DictionaryEntry;
 import io.royaloaklabs.supergenki.domain.SearchResult;
 import io.royaloaklabs.supergenki.domain.Sense;
 import sh.drt.supergenkiutil.furiganaview.FuriganaView;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
   private RecyclerView recyclerView;
@@ -117,18 +116,24 @@ public class MainActivity extends AppCompatActivity {
     actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
     dictionaryAdapter = new DictionaryAdapter(getApplicationContext());
+    SearchResult defaultWordOfTheDay = dictionaryAdapter.getOneSearchResultById(1289400L);
 
     // use a linear layout manager
     layoutManager = new LinearLayoutManager(this);
 
-    SearchResult wordOfTheDay;
+    SearchResult wordOfTheDay = null;
 
     try {
-      wordOfTheDay = dictionaryAdapter.getOneSearchResultById(getDailyIndex());
+      Long translatedId = (getDailyIndex() * 10) + 1000000;
+      wordOfTheDay = dictionaryAdapter.getOneSearchResultById(translatedId);
     } catch (Exception e) {
-      wordOfTheDay = dictionaryAdapter.getOneSearchResultById(50L);
+      wordOfTheDay = defaultWordOfTheDay;
     }
     DictionaryEntry entry = dictionaryAdapter.getOne(wordOfTheDay.getId());
+
+    if(isEntryVulgar(entry)){
+      entry = dictionaryAdapter.getOne(defaultWordOfTheDay.getId());
+    }
 
     TextView romajiText = findViewById(R.id.detailedRomajiView);
     TextView englishText = findViewById(R.id.detailedTranslationView);
@@ -158,6 +163,20 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
+  protected boolean isEntryVulgar(DictionaryEntry entry) {
+    List<String> vulgarWords = Arrays.asList("fuck", "shit", "vagina", "pussy", "cock", "penis", "damn", "dick", "sex", "bastard");
+
+    for(Sense sense : entry.getSenses()) {
+      for(String vulgarWord : vulgarWords) {
+        if(sense.toJoinedString().contains(vulgarWord)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
   private Long getDailyIndex() {
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
     String stringDate = dateFormat.format(new Date());
@@ -171,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
     } catch(Exception e) {
       e.printStackTrace();
       //Return a static number if for some reason the MD5 failed. (Maybe make this random #?)
-      return 10L;
+      return 1289400L;
     }
     return tableHashResult.longValue();
   }
