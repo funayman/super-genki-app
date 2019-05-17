@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.royaloaklabs.supergenki.activities.FavoriteViewActivity;
 import io.royaloaklabs.supergenki.activities.SearchActivity;
+import io.royaloaklabs.supergenki.activities.SettingsActivity;
 import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.DictionaryEntry;
@@ -95,13 +96,14 @@ public class MainActivity extends AppCompatActivity {
             // close drawer when item is tapped
             drawerLayout.closeDrawers();
 
+            Intent i = null;
             switch(menuItem.getItemId()) {
-              case R.id.menu_about:
-                // User chose the "About" item, show the app settings UI...
-                showAboutDialog();
+              case R.id.menu_settings:
+                i = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(i);
                 break;
               case R.id.menu_favorites:
-                Intent i = new Intent(getApplicationContext(), FavoriteViewActivity.class);
+                i = new Intent(getApplicationContext(), FavoriteViewActivity.class);
                 startActivity(i);
                 break;
               case R.id.menu_search:
