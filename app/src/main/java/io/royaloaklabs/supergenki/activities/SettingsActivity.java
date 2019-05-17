@@ -158,7 +158,7 @@ public class SettingsActivity extends PreferenceActivity {
   protected boolean isValidFragment(String fragmentName) {
     return PreferenceFragment.class.getName().equals(fragmentName)
         || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-        || GeneralPreferenceFragment.class.getName().equals(fragmentName);
+        || AboutPreferenceFragment.class.getName().equals(fragmentName);
   }
 
   /**
@@ -179,16 +179,6 @@ public class SettingsActivity extends PreferenceActivity {
       // guidelines.
       // bindPreferenceSummaryToValue(findPreference("example_text"));
       // bindPreferenceSummaryToValue(findPreference("example_list"));
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-      int id = item.getItemId();
-      if(id == android.R.id.home) {
-        startActivity(new Intent(getActivity(), SettingsActivity.class));
-        return true;
-      }
-      return super.onOptionsItemSelected(item);
     }
   }
 
