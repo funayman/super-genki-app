@@ -8,26 +8,6 @@
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
     <string name="menu_lists">Lists</string>
-    <string name="about_dialog_title">About Super Genki</string>
-    <string name="about_dialog_text"><![CDATA[
-        <p>
-        Super Genki aims to be a general purpose app for Japanese language learners.
-        We encourage users and developers of the like to help contribute to the app in any way they can.
-        If you found a bug or want to make a contribution, you can checkout the source code at our <a href="https://github.com/royaloaklabs/super-genki-app">Github page</a>.
-        </p>
-
-        <h1>The Team</h1>
-        <p>Super Genki is developed by <b><a href="https://github.com/funayman">funayman</a></b> and <b><a href="https://github.com/Xsixteen">Xsixteen</a></b>.</p>
-
-        <h1>Licence</h1>
-        <p>Super Genki is open-source under the <b>Apache Licence 2.0</b>. You can read more about the licence <a href="https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)">here</a></p>
-
-        <h1>FOSS Materials</h1>
-        <p>The Super Genki app could not have been created without the following open-source libraries and applications:</p>
-
-        <h3><a href="http://edrdg.org/jmdict/j_jmdict.html">JMDict</a></h3>
-        ]]>
-    </string>
 
     <string name="yes">Yes</string>
     <string name="no">No</string>

@@ -1,0 +1,37 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:key="pref_category_app" android:title="App Info">
+        <Preference
+                android:key="pref_version"
+                android:title="Version"
+                android:summary="1.2" />
+        <Preference
+                android:key="pref_licence"
+                android:title="Apache License 2.0"
+                android:summary="A permissive license whose main conditions require preservation of copyright and license notices. Contributors provide an express grant of patent rights. Licensed works, modifications, and larger works may be distributed under different terms and without source code." >
+            <intent android:action="android.intent.action.VIEW"
+                    android:data="https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)" />
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:key="pref_category_open_source" android:title="Open Source Technologies">
+        <Preference
+                android:key="foss_jmdict"
+                android:title="JMDict"
+                android:summary="Open source project has at its aim the compilation of a multilingual lexical database with Japanese as the pivot language" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:key="pref_category_team" android:title="The Team">
+        <Preference android:key="team_x16"
+                    android:title="Xsixteen">
+            <intent android:action="android.intent.action.VIEW"
+                    android:data="https://www.github.com/Xsixteen" />
+        </Preference>
+        <Preference android:key="team_drt"
+                    android:title="drt" >
+            <intent android:action="android.intent.action.VIEW"
+                    android:data="https://drt.sh" />
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>

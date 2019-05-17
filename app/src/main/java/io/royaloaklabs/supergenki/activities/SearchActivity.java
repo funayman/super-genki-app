@@ -47,23 +47,6 @@ public class SearchActivity extends AppCompatActivity {
     }
   };
 
-  private void showAboutDialog() {
-    AlertDialog.Builder adb = new AlertDialog.Builder(this);
-    View dialogView = getLayoutInflater().inflate(R.layout.about_view, null);
-
-    TextView tv = (TextView) dialogView.findViewById(R.id.about_dialog_textview);
-    String sourceString = getString(R.string.about_dialog_text);
-    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-      tv.setText(Html.fromHtml(sourceString, Html.FROM_HTML_MODE_LEGACY));
-    } else {
-      tv.setText(Html.fromHtml(sourceString));
-    }
-    tv.setMovementMethod(LinkMovementMethod.getInstance());
-
-    adb.setView(dialogView).setPositiveButton(R.string.close, null);
-    adb.create().show();
-  }
-
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch(item.getItemId()) {
