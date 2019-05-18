@@ -30,4 +30,25 @@
     <string name="pref_header_app_info">App Info</string>
     <string name="pref_header_open_source">Open Source Technologies</string>
     <string name="pref_header_team">The Team</string>
+
+    <string name="vulgar_switch_title">Toggle Bad Words</string>
+    <string name="vulgar_switch_summary">Allow vulgar and slag definitions to be displayed in Word of the day</string>
+
+    <string name="about_title">About</string>
+    <string name="about_summary">View version number, FOSS acknowledgements, licences, etc</string>
+
+    <string name="feedback_title">Send Feedback</string>
+    <string name="feedback_summary">Report technical issues or suggest new features</string>
+
+    <string name="version_title">Version</string>
+    <string name="version_summary">1.2</string>
+
+    <string name="licence_title">Apache License 2.0</string>
+    <string name="licence_summary">A permissive license whose main conditions require preservation of copyright and license notices. Contributors provide an express grant of patent rights. Licensed works, modifications, and larger works may be distributed under different terms and without source code.</string>
+
+    <string name="foss_jmdict_title">JMDict</string>
+    <string name="foss_jmdict_summary">Open source project has at its aim the compilation of a multilingual lexical database with Japanese as the pivot language</string>
+
+    <string name="team_xsixteen_title">Xsixteen</string>
+    <string name="team_drt_title">drt</string>
 </resources>

@@ -6,8 +6,8 @@
 
         <SwitchPreference
                 android:key="vulgar_switch"
-                android:title="Toggle Bad Words"
-                android:summary="Allow vulgar and slag definitions to be displayed in Word of the day"
+                android:title="@string/vulgar_switch_title"
+                android:summary="@string/vulgar_switch_summary"
                 android:defaultValue="false"/>
     </PreferenceCategory>
 
@@ -18,14 +18,14 @@
 
         <Preference
                 android:key="about"
-                android:summary="View version number, FOSS acknowledgements, licences, etc"
-                android:title="About"
+                android:title="@string/about_title"
+                android:summary="@string/about_summary"
                 android:fragment="io.royaloaklabs.supergenki.activities.SettingsActivity$AboutPreferenceFragment" />
 
         <Preference
                 android:key="feedback"
-                android:summary="Report technical issues or suggest new features"
-                android:title="Send feedback">
+                android:title="@string/feedback_title"
+                android:summary="@string/feedback_summary" >
             <intent android:action="android.intent.action.VIEW"
                     android:data="https://github.com/royaloaklabs/super-genki-app/issues" />
         </Preference>
