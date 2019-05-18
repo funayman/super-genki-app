@@ -2,7 +2,7 @@
 
     <PreferenceCategory
             android:key="general_category"
-            android:title="General">
+            android:title="@string/pref_header_general">
 
         <SwitchPreference
                 android:key="vulgar_switch"
@@ -14,7 +14,7 @@
 
     <PreferenceCategory
             android:key="help_category"
-            android:title="Help">
+            android:title="@string/pref_header_help">
 
         <Preference
                 android:key="about"

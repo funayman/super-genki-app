@@ -1,6 +1,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:key="pref_category_app" android:title="App Info">
+    <PreferenceCategory android:key="pref_category_app" android:title="@string/pref_header_app_info">
         <Preference
                 android:key="pref_version"
                 android:title="Version"
@@ -14,7 +14,7 @@
         </Preference>
     </PreferenceCategory>
 
-    <PreferenceCategory android:key="pref_category_open_source" android:title="Open Source Technologies">
+    <PreferenceCategory android:key="pref_category_open_source" android:title="@string/pref_header_open_source">
         <Preference
                 android:key="foss_jmdict"
                 android:title="JMDict"
@@ -22,7 +22,7 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:key="pref_category_team" android:title="The Team">
+    <PreferenceCategory android:key="pref_category_team" android:title="@string/pref_header_team">
         <Preference android:key="team_x16"
                     android:title="Xsixteen">
             <intent android:action="android.intent.action.VIEW"
