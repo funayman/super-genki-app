@@ -8,26 +8,6 @@
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
     <string name="menu_lists">Lists</string>
-    <string name="about_dialog_title">About Super Genki</string>
-    <string name="about_dialog_text"><![CDATA[
-        <p>
-        Super Genki aims to be a general purpose app for Japanese language learners.
-        We encourage users and developers of the like to help contribute to the app in any way they can.
-        If you found a bug or want to make a contribution, you can checkout the source code at our <a href="https://github.com/royaloaklabs/super-genki-app">Github page</a>.
-        </p>
-
-        <h1>The Team</h1>
-        <p>Super Genki is developed by <b><a href="https://github.com/funayman">funayman</a></b> and <b><a href="https://github.com/Xsixteen">Xsixteen</a></b>.</p>
-
-        <h1>Licence</h1>
-        <p>Super Genki is open-source under the <b>Apache Licence 2.0</b>. You can read more about the licence <a href="https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)">here</a></p>
-
-        <h1>FOSS Materials</h1>
-        <p>The Super Genki app could not have been created without the following open-source libraries and applications:</p>
-
-        <h3><a href="http://edrdg.org/jmdict/j_jmdict.html">JMDict</a></h3>
-        ]]>
-    </string>
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -42,4 +22,33 @@
     <string name="romaji">Romaji</string>
     <string name="english">English</string>
     <string name="title_activity_favorite_view">Favorites</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Settings -->
+    <string name="pref_header_general">General</string>
+    <string name="pref_header_help">Help</string>
+    <string name="pref_header_app_info">App Info</string>
+    <string name="pref_header_open_source">Open Source Technologies</string>
+    <string name="pref_header_team">The Team</string>
+
+    <string name="vulgar_switch_title">Toggle Bad Words</string>
+    <string name="vulgar_switch_summary">Allow vulgar and slag definitions to be displayed in Word of the day</string>
+
+    <string name="about_title">About</string>
+    <string name="about_summary">View version number, FOSS acknowledgements, licences, etc</string>
+
+    <string name="feedback_title">Send Feedback</string>
+    <string name="feedback_summary">Report technical issues or suggest new features</string>
+
+    <string name="version_title">Version</string>
+    <string name="version_summary">1.2</string>
+
+    <string name="licence_title">Apache License 2.0</string>
+    <string name="licence_summary">A permissive license whose main conditions require preservation of copyright and license notices. Contributors provide an express grant of patent rights. Licensed works, modifications, and larger works may be distributed under different terms and without source code.</string>
+
+    <string name="foss_jmdict_title">JMDict</string>
+    <string name="foss_jmdict_summary">Open source project has at its aim the compilation of a multilingual lexical database with Japanese as the pivot language</string>
+
+    <string name="team_xsixteen_title">Xsixteen</string>
+    <string name="team_drt_title">drt</string>
 </resources>

@@ -5,28 +5,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.navigation.NavigationView;
-import io.royaloaklabs.supergenki.activities.FavoriteViewActivity;
-import io.royaloaklabs.supergenki.activities.SearchActivity;
-import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
-import io.royaloaklabs.supergenki.database.DictionaryAdapter;
-import io.royaloaklabs.supergenki.domain.DictionaryEntry;
-import io.royaloaklabs.supergenki.domain.SearchResult;
-import io.royaloaklabs.supergenki.domain.Sense;
-import sh.drt.supergenkiutil.furiganaview.FuriganaView;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -34,6 +17,24 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import io.royaloaklabs.supergenki.activities.FavoriteViewActivity;
+import io.royaloaklabs.supergenki.activities.SearchActivity;
+import io.royaloaklabs.supergenki.activities.SettingsActivity;
+import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
+import io.royaloaklabs.supergenki.database.DictionaryAdapter;
+import io.royaloaklabs.supergenki.domain.DictionaryEntry;
+import io.royaloaklabs.supergenki.domain.SearchResult;
+import io.royaloaklabs.supergenki.domain.Sense;
+import sh.drt.supergenkiutil.furiganaview.FuriganaView;
 
 public class MainActivity extends AppCompatActivity {
   private RecyclerView recyclerView;
@@ -43,23 +44,6 @@ public class MainActivity extends AppCompatActivity {
   private DrawerLayout drawerLayout;
   private ActionBarDrawerToggle drawerToggle;
   private Intent searchActivity;
-
-  private void showAboutDialog() {
-    AlertDialog.Builder adb = new AlertDialog.Builder(this);
-    View dialogView = getLayoutInflater().inflate(R.layout.about_view, null);
-
-    TextView tv = (TextView) dialogView.findViewById(R.id.about_dialog_textview);
-    String sourceString = getString(R.string.about_dialog_text);
-    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-      tv.setText(Html.fromHtml(sourceString, Html.FROM_HTML_MODE_LEGACY));
-    } else {
-      tv.setText(Html.fromHtml(sourceString));
-    }
-    tv.setMovementMethod(LinkMovementMethod.getInstance());
-
-    adb.setView(dialogView).setPositiveButton(R.string.close, null);
-    adb.create().show();
-  }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -95,13 +79,16 @@ public class MainActivity extends AppCompatActivity {
             // close drawer when item is tapped
             drawerLayout.closeDrawers();
 
+            Intent i = null;
             switch(menuItem.getItemId()) {
-              case R.id.menu_about:
-                // User chose the "About" item, show the app settings UI...
-                showAboutDialog();
+              case R.id.menu_settings:
+                i = new Intent(getApplicationContext(), SettingsActivity.class);
+                i.putExtra( SettingsActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GeneralPreferenceFragment.class.getName() );
+                i.putExtra( SettingsActivity.EXTRA_NO_HEADERS, true );
+                startActivity(i);
                 break;
               case R.id.menu_favorites:
-                Intent i = new Intent(getApplicationContext(), FavoriteViewActivity.class);
+                i = new Intent(getApplicationContext(), FavoriteViewActivity.class);
                 startActivity(i);
                 break;
               case R.id.menu_search:
@@ -121,7 +108,13 @@ public class MainActivity extends AppCompatActivity {
     // use a linear layout manager
     layoutManager = new LinearLayoutManager(this);
 
-    SearchResult wordOfTheDay = dictionaryAdapter.getOneSearchResultById(getDailyIndex());
+    SearchResult wordOfTheDay;
+
+    try {
+      wordOfTheDay = dictionaryAdapter.getOneSearchResultById(getDailyIndex());
+    } catch (Exception e) {
+      wordOfTheDay = dictionaryAdapter.getOneSearchResultById(50L);
+    }
     DictionaryEntry entry = dictionaryAdapter.getOne(wordOfTheDay.getId());
 
     TextView romajiText = findViewById(R.id.detailedRomajiView);
@@ -132,24 +125,7 @@ public class MainActivity extends AppCompatActivity {
     furiganaView.setText(japaneseText);
 
     romajiText.setText(entry.getRomaji());
-
-    // add to other card view
-    List<Sense> senses = entry.getSenses();
-    if(senses.size() == 1) {
-      englishText.setText(senses.get(0).toJoinedString());
-    } else if(senses.size() == 2) {
-      englishText.setText(String.format("1) %s\n2) %s\n",
-          senses.get(0).toJoinedString(), senses.get(1).toJoinedString()));
-    } else if(senses.size() == 3) {
-      englishText.setText(String.format("1) %s\n2) %s\n3) %s\n",
-          senses.get(0).toJoinedString(), senses.get(1).toJoinedString(), senses.get(2).toJoinedString()));
-    } else {
-      StringBuilder sb = new StringBuilder();
-      for(int i = 0; i < senses.size(); i++) {
-        sb.append(String.format("%d) %s\n", i + 1, entry.getSenses().get(i).toJoinedString()));
-      }
-      englishText.setText(sb.toString());
-    }
+    englishText.setText(wordOfTheDay.getEnglish());
   }
 
   private Long getDailyIndex() {
