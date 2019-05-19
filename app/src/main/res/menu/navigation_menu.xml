@@ -9,7 +9,7 @@
     <item android:id="@+id/menu_favorites"
           android:title="Favorites"
           android:icon="@drawable/ic_star_border_black_24dp" />
-    <item android:id="@+id/menu_about"
-          android:title="@string/title_about"
-          android:icon="@drawable/ic_baseline_info_24px" />
+    <item android:id="@+id/menu_settings"
+          android:title="@string/title_activity_settings"
+          android:icon="@android:drawable/ic_menu_preferences"/>
 </menu>

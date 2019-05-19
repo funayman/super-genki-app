@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.royaloaklabs.supergenki.activities.FavoriteViewActivity;
 import io.royaloaklabs.supergenki.activities.SearchActivity;
+import io.royaloaklabs.supergenki.activities.SettingsActivity;
 import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.DictionaryEntry;
@@ -43,23 +44,6 @@ public class MainActivity extends AppCompatActivity {
   private DrawerLayout drawerLayout;
   private ActionBarDrawerToggle drawerToggle;
   private Intent searchActivity;
-
-  private void showAboutDialog() {
-    AlertDialog.Builder adb = new AlertDialog.Builder(this);
-    View dialogView = getLayoutInflater().inflate(R.layout.about_view, null);
-
-    TextView tv = (TextView) dialogView.findViewById(R.id.about_dialog_textview);
-    String sourceString = getString(R.string.about_dialog_text);
-    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-      tv.setText(Html.fromHtml(sourceString, Html.FROM_HTML_MODE_LEGACY));
-    } else {
-      tv.setText(Html.fromHtml(sourceString));
-    }
-    tv.setMovementMethod(LinkMovementMethod.getInstance());
-
-    adb.setView(dialogView).setPositiveButton(R.string.close, null);
-    adb.create().show();
-  }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -95,13 +79,16 @@ public class MainActivity extends AppCompatActivity {
             // close drawer when item is tapped
             drawerLayout.closeDrawers();
 
+            Intent i = null;
             switch(menuItem.getItemId()) {
-              case R.id.menu_about:
-                // User chose the "About" item, show the app settings UI...
-                showAboutDialog();
+              case R.id.menu_settings:
+                i = new Intent(getApplicationContext(), SettingsActivity.class);
+                i.putExtra( SettingsActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GeneralPreferenceFragment.class.getName() );
+                i.putExtra( SettingsActivity.EXTRA_NO_HEADERS, true );
+                startActivity(i);
                 break;
               case R.id.menu_favorites:
-                Intent i = new Intent(getApplicationContext(), FavoriteViewActivity.class);
+                i = new Intent(getApplicationContext(), FavoriteViewActivity.class);
                 startActivity(i);
                 break;
               case R.id.menu_search:

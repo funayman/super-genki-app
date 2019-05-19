@@ -12,10 +12,13 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".activities.SettingsActivity"
+                android:label="@string/title_activity_settings">
+        </activity>
+        <activity
                 android:name=".activities.FavoriteViewActivity"
                 android:label="@string/title_activity_favorite_view">
         </activity>
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -23,8 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.DetailedJapaneseActivity"> </activity>
-        <activity android:name=".activities.SearchActivity"> </activity>
+        <activity android:name=".activities.DetailedJapaneseActivity">
+        </activity>
+        <activity android:name=".activities.SearchActivity">
+        </activity>
     </application>
 
 </manifest>

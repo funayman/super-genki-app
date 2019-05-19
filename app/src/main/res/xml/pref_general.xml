@@ -1,0 +1,35 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+            android:key="general_category"
+            android:title="@string/pref_header_general">
+
+        <SwitchPreference
+                android:key="vulgar_switch"
+                android:title="@string/vulgar_switch_title"
+                android:summary="@string/vulgar_switch_summary"
+                android:defaultValue="false"
+                android:enabled="false"/>
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
+            android:key="help_category"
+            android:title="@string/pref_header_help">
+
+        <Preference
+                android:key="about"
+                android:title="@string/about_title"
+                android:summary="@string/about_summary"
+                android:fragment="io.royaloaklabs.supergenki.activities.SettingsActivity$AboutPreferenceFragment" />
+
+        <Preference
+                android:key="feedback"
+                android:title="@string/feedback_title"
+                android:summary="@string/feedback_summary" >
+            <intent android:action="android.intent.action.VIEW"
+                    android:data="https://github.com/royaloaklabs/super-genki-app/issues" />
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>
