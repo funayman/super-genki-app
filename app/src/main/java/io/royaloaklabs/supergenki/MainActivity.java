@@ -1,31 +1,19 @@
 package io.royaloaklabs.supergenki;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
-
-import com.google.android.material.navigation.NavigationView;
-
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.navigation.NavigationView;
 import io.royaloaklabs.supergenki.activities.FavoriteViewActivity;
 import io.royaloaklabs.supergenki.activities.SearchActivity;
 import io.royaloaklabs.supergenki.activities.SettingsActivity;
@@ -33,8 +21,13 @@ import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.DictionaryEntry;
 import io.royaloaklabs.supergenki.domain.SearchResult;
-import io.royaloaklabs.supergenki.domain.Sense;
 import sh.drt.supergenkiutil.furiganaview.FuriganaView;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
   private RecyclerView recyclerView;
@@ -44,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
   private DrawerLayout drawerLayout;
   private ActionBarDrawerToggle drawerToggle;
   private Intent searchActivity;
+
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.search_icon_navigation, menu);
+
+    return true;
+  }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -55,7 +55,11 @@ public class MainActivity extends AppCompatActivity {
           drawerLayout.openDrawer(GravityCompat.START);
         }
         return true;
-      default:
+      case R.id.search_icon:
+        Intent i = new Intent(getApplicationContext(),SearchActivity.class);
+        startActivity(i);
+        return true;
+        default:
         // If we got here, the user's action was not recognized.
         // Invoke the superclass to handle it.
         return super.onOptionsItemSelected(item);
