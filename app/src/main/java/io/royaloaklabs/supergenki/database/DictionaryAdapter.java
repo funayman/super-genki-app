@@ -13,7 +13,7 @@ import java.util.List;
 
 public class DictionaryAdapter {
   private static final String GET_ONE_RECORD_BY_ID_SQL = String.format(
-      "SELECT %s, %s, %s, %s, %s, %s FROM %s WHERE %s = ?",
+      "SELECT %s, %s, %s, %s, %s, %s FROM %s WHERE %s MATCH ?",
       DictionaryEntry.ID_COL_NAME,
       DictionaryEntry.JAPANESE_COL_NAME,
       DictionaryEntry.FURIGANA_COL_NAME,
@@ -21,7 +21,7 @@ public class DictionaryAdapter {
       DictionaryEntry.ROMAJI_COL_NAME,
       DictionaryEntry.FREQUENCY_COL_NAME,
       DictionaryEntry.ENTRY_TABLE_NAME,
-      DictionaryEntry.ID_COL_NAME
+      DictionaryEntry.ENTRY_TABLE_NAME
   );
 
   private static final String RANDOM_DATA_SQL = String.format(
@@ -36,7 +36,7 @@ public class DictionaryAdapter {
   );
 
   private static final String GET_BY_ID_SQL = String.format(
-      "SELECT %s,%s,%s,%s,%s,%s, %s FROM %s AS d INNER JOIN %s AS r ON d.id = r.id WHERE d.id = ?",
+      "SELECT %s,%s,%s,%s,%s,%s, %s FROM %s AS d INNER JOIN %s AS r ON d.entryid = r.entryid WHERE d.entryid = ?",
       DictionaryEntry.PART_OF_SPEECH_COL_NAME,
       DictionaryEntry.GLOSS_COL_NAME,
       DictionaryEntry.JAPANESE_COL_NAME,
@@ -82,9 +82,8 @@ public class DictionaryAdapter {
   }
 
   public SearchResult getOneSearchResultById(Long id) {
-    Long translatedId = (id * 10) + 1000000;
     SQLiteDatabase db = dictionaryHelper.getReadableDatabase();
-    Cursor cursor = db.rawQuery(GET_ONE_RECORD_BY_ID_SQL, new String[]{translatedId.toString()});
+    Cursor cursor = db.rawQuery(GET_ONE_RECORD_BY_ID_SQL, new String[]{id.toString()});
     List<SearchResult> entryList = this.buildListFromCursor(cursor);
     return entryList.get(0);
   }
@@ -117,14 +116,14 @@ public class DictionaryAdapter {
 
   private List<SearchResult> buildListFromCursor(Cursor cursor) {
     List<SearchResult> results = new ArrayList<>();
-    for(; cursor.moveToNext(); ) {
+    for(;cursor.moveToNext();) {
       long id = cursor.getLong(cursor.getColumnIndex(DictionaryEntry.ID_COL_NAME));
       String japanese = cursor.getString(cursor.getColumnIndex(DictionaryEntry.JAPANESE_COL_NAME));
       String furigana = cursor.getString(cursor.getColumnIndex(DictionaryEntry.FURIGANA_COL_NAME));
       String english = cursor.getString(cursor.getColumnIndex(DictionaryEntry.ENGLISH_COL_NAME));
       String romaji = cursor.getString(cursor.getColumnIndex(DictionaryEntry.ROMAJI_COL_NAME));
 
-      results.add( new SearchResult(id, japanese, furigana, english, romaji) );
+      results.add(new SearchResult(id, japanese, furigana, english, romaji));
     }
 
     return results;

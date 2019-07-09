@@ -19,7 +19,6 @@ import io.royaloaklabs.supergenki.activities.SearchActivity;
 import io.royaloaklabs.supergenki.activities.SettingsActivity;
 import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
-import io.royaloaklabs.supergenki.domain.DictionaryEntry;
 import io.royaloaklabs.supergenki.domain.SearchResult;
 import sh.drt.supergenkiutil.furiganaview.FuriganaView;
 
@@ -56,10 +55,10 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
       case R.id.search_icon:
-        Intent i = new Intent(getApplicationContext(),SearchActivity.class);
+        Intent i = new Intent(getApplicationContext(), SearchActivity.class);
         startActivity(i);
         return true;
-        default:
+      default:
         // If we got here, the user's action was not recognized.
         // Invoke the superclass to handle it.
         return super.onOptionsItemSelected(item);
@@ -87,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
             switch(menuItem.getItemId()) {
               case R.id.menu_settings:
                 i = new Intent(getApplicationContext(), SettingsActivity.class);
-                i.putExtra( SettingsActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GeneralPreferenceFragment.class.getName() );
-                i.putExtra( SettingsActivity.EXTRA_NO_HEADERS, true );
+                i.putExtra(SettingsActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GeneralPreferenceFragment.class.getName());
+                i.putExtra(SettingsActivity.EXTRA_NO_HEADERS, true);
                 startActivity(i);
                 break;
               case R.id.menu_favorites:
@@ -115,20 +114,21 @@ public class MainActivity extends AppCompatActivity {
     SearchResult wordOfTheDay;
 
     try {
-      wordOfTheDay = dictionaryAdapter.getOneSearchResultById(getDailyIndex());
-    } catch (Exception e) {
+      Long wordOfTheDayId = (getDailyIndex() * 10) + 1000000;
+      wordOfTheDay = dictionaryAdapter.getOneSearchResultById(wordOfTheDayId);
+    } catch(Exception e) {
       wordOfTheDay = dictionaryAdapter.getOneSearchResultById(50L);
     }
-    DictionaryEntry entry = dictionaryAdapter.getOne(wordOfTheDay.getId());
 
     TextView romajiText = findViewById(R.id.detailedRomajiView);
     TextView englishText = findViewById(R.id.detailedTranslationView);
     FuriganaView furiganaView = findViewById(R.id.japaneseTextView);
 
-    String japaneseText = (entry.getFurigana().isEmpty()) ? entry.getJapanese() : String.format("{%s;%s}", entry.getJapanese(), entry.getFurigana());
+    String japaneseText = (wordOfTheDay.getFurigana().isEmpty()) ?
+        wordOfTheDay.getJapanese() : String.format("{%s;%s}", wordOfTheDay.getJapanese(), wordOfTheDay.getFurigana());
     furiganaView.setText(japaneseText);
 
-    romajiText.setText(entry.getRomaji());
+    romajiText.setText(wordOfTheDay.getRomaji());
     englishText.setText(wordOfTheDay.getEnglish());
   }
 
