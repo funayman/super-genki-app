@@ -7,7 +7,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -17,25 +16,17 @@ import com.google.android.material.navigation.NavigationView;
 import io.royaloaklabs.supergenki.activities.FavoriteViewActivity;
 import io.royaloaklabs.supergenki.activities.SearchActivity;
 import io.royaloaklabs.supergenki.activities.SettingsActivity;
-import io.royaloaklabs.supergenki.adapter.DictionaryViewAdapter;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
-import io.royaloaklabs.supergenki.domain.SearchResult;
+import io.royaloaklabs.supergenki.domain.DictionaryEntry;
+import io.royaloaklabs.supergenki.repo.WordOfTheDayRepository;
 import sh.drt.supergenkiutil.furiganaview.FuriganaView;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class MainActivity extends AppCompatActivity {
-  private RecyclerView recyclerView;
-  private DictionaryViewAdapter dictionaryViewAdapter;
   private RecyclerView.LayoutManager layoutManager;
   private DictionaryAdapter dictionaryAdapter;
   private DrawerLayout drawerLayout;
-  private ActionBarDrawerToggle drawerToggle;
   private Intent searchActivity;
+  private WordOfTheDayRepository wotdRepo;
 
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
@@ -111,14 +102,9 @@ public class MainActivity extends AppCompatActivity {
     // use a linear layout manager
     layoutManager = new LinearLayoutManager(this);
 
-    SearchResult wordOfTheDay;
-
-    try {
-      Long wordOfTheDayId = (getDailyIndex() * 10) + 1000000;
-      wordOfTheDay = dictionaryAdapter.getOneSearchResultById(wordOfTheDayId);
-    } catch(Exception e) {
-      wordOfTheDay = dictionaryAdapter.getOneSearchResultById(50L);
-    }
+    // set up word of the day
+    wotdRepo = new WordOfTheDayRepository(this.getApplicationContext());
+    DictionaryEntry wordOfTheDay = wotdRepo.get();
 
     TextView romajiText = findViewById(R.id.detailedRomajiView);
     TextView englishText = findViewById(R.id.detailedTranslationView);
@@ -129,24 +115,7 @@ public class MainActivity extends AppCompatActivity {
     furiganaView.setText(japaneseText);
 
     romajiText.setText(wordOfTheDay.getRomaji());
-    englishText.setText(wordOfTheDay.getEnglish());
+    englishText.setText(wordOfTheDay.getSensesAsString());
   }
 
-  private Long getDailyIndex() {
-    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-    String stringDate = dateFormat.format(new Date());
-    BigInteger tableHashResult = BigInteger.valueOf(0L);
-
-    try {
-      MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-      messageDigest.update(stringDate.getBytes(), 0, stringDate.length());
-      BigInteger md5Base10 = new BigInteger(1, messageDigest.digest());
-      tableHashResult = md5Base10.mod(BigInteger.valueOf(dictionaryAdapter.getEntryTableCount()));
-    } catch(Exception e) {
-      e.printStackTrace();
-      //Return a static number if for some reason the MD5 failed. (Maybe make this random #?)
-      return 10L;
-    }
-    return tableHashResult.longValue();
-  }
 }
