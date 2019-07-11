@@ -1,7 +1,10 @@
 package io.royaloaklabs.supergenki;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -102,10 +105,15 @@ public class MainActivity extends AppCompatActivity {
     // use a linear layout manager
     layoutManager = new LinearLayoutManager(this);
 
+    // query preferences
+    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+    Boolean isVulgarOk = sharedPreferences.getBoolean("vulgar_switch", Boolean.FALSE);
+
     // set up word of the day
     wotdRepo = new WordOfTheDayRepository(this.getApplicationContext());
-    DictionaryEntry wordOfTheDay = wotdRepo.get();
+    DictionaryEntry wordOfTheDay = wotdRepo.get(isVulgarOk);
 
+    // write word of the day to screen
     TextView romajiText = findViewById(R.id.detailedRomajiView);
     TextView englishText = findViewById(R.id.detailedTranslationView);
     FuriganaView furiganaView = findViewById(R.id.japaneseTextView);

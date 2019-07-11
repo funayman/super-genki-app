@@ -18,15 +18,19 @@ public class WordOfTheDayRepository {
     dictionaryAdapter = new DictionaryAdapter(context);
   }
 
-  public DictionaryEntry get() {
+  public DictionaryEntry get(boolean withVulgar) {
     long index = this.getDailyIndex();
 
-    try {
-      return this.dictionaryAdapter.getOne(index);
-    } catch(Exception e) {
-      // do nothing; fix later
+    if(withVulgar) return this.dictionaryAdapter.getOne(index);
+
+    // user doesn't want vulgar words
+    for(int i = 0; i < MAX_NUM_TRIES; i++) {
+      DictionaryEntry e = this.dictionaryAdapter.getOneFilteredById(index);
+      if(e.getId() == index) return e;
+      index++;
     }
 
+    // all the words were vulgar (somehow); default to
     return this.dictionaryAdapter.getOne(50L);
   }
 
@@ -44,7 +48,7 @@ public class WordOfTheDayRepository {
     } catch(Exception e) {
       e.printStackTrace();
       //Return a static number if for some reason the MD5 failed. (Maybe make this random #?)
-      return 10L;
+      tableHashResult = BigInteger.valueOf(10L);
     }
     return (tableHashResult.longValue() * 10) + 1000000;
   }
