@@ -30,8 +30,8 @@ public class WordOfTheDayRepository {
       index++;
     }
 
-    // all the words were vulgar (somehow); default to
-    return this.dictionaryAdapter.getOne(50L);
+    // all the words were vulgar (somehow); say we're sorry
+    return this.dictionaryAdapter.getOne(1612030L);
   }
 
   private Long getDailyIndex() {
