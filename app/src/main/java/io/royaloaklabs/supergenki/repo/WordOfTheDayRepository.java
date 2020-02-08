@@ -20,18 +20,21 @@ public class WordOfTheDayRepository {
 
   public DictionaryEntry get(boolean withVulgar) {
     long index = this.getDailyIndex();
-
-    if(withVulgar) return this.dictionaryAdapter.getOne(index);
+    DictionaryEntry de = null;
+    if(withVulgar) de = this.dictionaryAdapter.getOne(index);
 
     // user doesn't want vulgar words
     for(int i = 0; i < MAX_NUM_TRIES; i++) {
       DictionaryEntry e = this.dictionaryAdapter.getOneFilteredById(index);
-      if(e.getId() == index) return e;
+      if(e.getId() == index) {
+        de = e;
+        break;
+      }
       index++;
     }
 
     // all the words were vulgar (somehow); say we're sorry
-    return this.dictionaryAdapter.getOne(1612030L);
+    return de == null ? this.dictionaryAdapter.getOne(1612030L) : de;
   }
 
   private Long getDailyIndex() {
