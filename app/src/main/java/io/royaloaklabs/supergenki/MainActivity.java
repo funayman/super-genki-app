@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -22,15 +20,8 @@ import io.royaloaklabs.supergenki.activities.SearchActivity;
 import io.royaloaklabs.supergenki.activities.SettingsActivity;
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.DictionaryEntry;
-import io.royaloaklabs.supergenki.domain.SearchResult;
 import io.royaloaklabs.supergenki.repo.WordOfTheDayRepository;
 import sh.drt.supergenkiutil.furiganaview.FuriganaView;
-
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
   private RecyclerView.LayoutManager layoutManager;
@@ -38,13 +29,6 @@ public class MainActivity extends AppCompatActivity {
   private DrawerLayout drawerLayout;
   private Intent searchActivity;
   private WordOfTheDayRepository wotdRepo;
-
-  public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.search_icon_navigation, menu);
-
-    return true;
-  }
 
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
