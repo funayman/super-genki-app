@@ -12,7 +12,7 @@ public class DictionaryEntry {
   public static final String DEFINITION_TABLE_NAME = "definitions";
   public static final String READING_TABLE_NAME = "readings";
   public static final String ENTRY_TABLE_NAME = "einihongo";
-  public static final String ID_COL_NAME = "docid";
+  public static final String ID_COL_NAME = "entryid";
   public static final String JAPANESE_COL_NAME = "japanese";
   public static final String FURIGANA_COL_NAME = "furigana";
   public static final String ENGLISH_COL_NAME = "english";
