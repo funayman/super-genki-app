@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
+import io.royaloaklabs.supergenki.activities.CustomListViewActivity;
 import io.royaloaklabs.supergenki.activities.FavoriteViewActivity;
 import io.royaloaklabs.supergenki.activities.SearchActivity;
 import io.royaloaklabs.supergenki.activities.SettingsActivity;
@@ -85,6 +86,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
               case R.id.menu_favorites:
                 i = new Intent(getApplicationContext(), FavoriteViewActivity.class);
+                startActivity(i);
+                break;
+              case R.id.menu_customlists:
+                i = new Intent(getApplicationContext(), CustomListViewActivity.class);
                 startActivity(i);
                 break;
               case R.id.menu_search:

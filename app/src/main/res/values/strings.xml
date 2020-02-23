@@ -23,7 +23,8 @@
     <string name="english">English</string>
     <string name="title_activity_favorite_view">Favorites</string>
     <string name="title_activity_settings">Settings</string>
-
+    <!-- Custom Lists -->
+    <string name="title_activity_customlists_view">Custom Lists</string>
     <!-- Settings -->
     <string name="pref_header_general">General</string>
     <string name="pref_header_help">Help</string>
