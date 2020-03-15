@@ -1,6 +1,7 @@
 package io.royaloaklabs.supergenki.repo;
 
 import android.content.Context;
+
 import io.royaloaklabs.supergenki.database.DictionaryAdapter;
 import io.royaloaklabs.supergenki.domain.DictionaryEntry;
 
@@ -20,21 +21,25 @@ public class WordOfTheDayRepository {
 
   public DictionaryEntry get(boolean withVulgar) {
     long index = this.getDailyIndex();
-    DictionaryEntry de = null;
-    if(withVulgar) de = this.dictionaryAdapter.getOne(index);
+
+    DictionaryEntry de = this.dictionaryAdapter.getOne(index);
+
+    if(withVulgar) {
+      if(de != null) { return de; }
+      for(int i = 0; i < MAX_NUM_TRIES; i++) {
+        de = this.dictionaryAdapter.getOne(index++);
+        if(de != null) { return de; }
+      }
+    }
 
     // user doesn't want vulgar words
     for(int i = 0; i < MAX_NUM_TRIES; i++) {
-      DictionaryEntry e = this.dictionaryAdapter.getOneFilteredById(index);
-      if(e.getId() == index) {
-        de = e;
-        break;
-      }
-      index++;
+      de = this.dictionaryAdapter.getOneFilteredById(index++);
+      if(de != null) { return de; }
     }
 
     // all the words were vulgar (somehow); say we're sorry
-    return de == null ? this.dictionaryAdapter.getOne(1612030L) : de;
+    return this.dictionaryAdapter.getOne(1612030L);
   }
 
   private Long getDailyIndex() {

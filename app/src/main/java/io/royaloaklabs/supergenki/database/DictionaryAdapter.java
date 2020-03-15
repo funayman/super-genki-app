@@ -138,11 +138,8 @@ public class DictionaryAdapter {
 
       String senseData = cursor.getString(cursor.getColumnIndex(DictionaryEntry.GLOSS_COL_NAME));
       entry.getSenses().add(new Sense(senseData));
-
-      return entry;
-
     } catch(IllegalStateException|CursorIndexOutOfBoundsException e) {
-      entry = new DictionaryEntry(0);
+      return null;
     }
 
     return entry;
